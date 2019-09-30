@@ -1,0 +1,22 @@
+C:\Users\gustavo.moraes\Documents\Visual Studio 2010\Projects\LancamentoHoras\VisualEffects_1.2\VisualEffects\bin\Debug\VisualEffects.dll
+C:\Users\gustavo.moraes\Documents\Visual Studio 2010\Projects\LancamentoHoras\VisualEffects_1.2\VisualEffects\bin\Debug\VisualEffects.pdb
+C:\Users\gustavo.moraes\Documents\Visual Studio 2010\Projects\LancamentoHoras\VisualEffects_1.2\VisualEffects\obj\Debug\VisualEffects.csprojAssemblyReference.cache
+C:\Users\gustavo.moraes\Documents\Visual Studio 2010\Projects\LancamentoHoras\VisualEffects_1.2\VisualEffects\obj\Debug\VisualEffects.csproj.CoreCompileInputs.cache
+C:\Users\gustavo.moraes\Documents\Visual Studio 2010\Projects\LancamentoHoras\VisualEffects_1.2\VisualEffects\obj\Debug\VisualEffects.dll
+C:\Users\gustavo.moraes\Documents\Visual Studio 2010\Projects\LancamentoHoras\VisualEffects_1.2\VisualEffects\obj\Debug\VisualEffects.pdb
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\VisualEffects_1.2\VisualEffects\bin\Debug\VisualEffects.dll
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\VisualEffects_1.2\VisualEffects\bin\Debug\VisualEffects.pdb
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\VisualEffects_1.2\VisualEffects\obj\Debug\VisualEffects.csproj.CoreCompileInputs.cache
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\VisualEffects_1.2\VisualEffects\obj\Debug\VisualEffects.dll
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\VisualEffects_1.2\VisualEffects\obj\Debug\VisualEffects.pdb
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\GSAutoTimeEntries\VisualEffects_1.2\VisualEffects\bin\Debug\VisualEffects.dll
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\GSAutoTimeEntries\VisualEffects_1.2\VisualEffects\bin\Debug\VisualEffects.pdb
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\GSAutoTimeEntries\VisualEffects_1.2\VisualEffects\obj\Debug\VisualEffects.csproj.CoreCompileInputs.cache
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\GSAutoTimeEntries\VisualEffects_1.2\VisualEffects\obj\Debug\VisualEffects.dll
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\GSAutoTimeEntries\VisualEffects_1.2\VisualEffects\obj\Debug\VisualEffects.pdb
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\VisualEffects_1.2\VisualEffects\bin\Debug\VisualEffects.dll
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\VisualEffects_1.2\VisualEffects\bin\Debug\VisualEffects.pdb
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\VisualEffects_1.2\VisualEffects\obj\Debug\VisualEffects.csproj.CoreCompileInputs.cache
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\VisualEffects_1.2\VisualEffects\obj\Debug\VisualEffects.dll
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\VisualEffects_1.2\VisualEffects\obj\Debug\VisualEffects.pdb
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\VisualEffects_1.2\VisualEffects\obj\Debug\VisualEffects.csprojAssemblyReference.cache
