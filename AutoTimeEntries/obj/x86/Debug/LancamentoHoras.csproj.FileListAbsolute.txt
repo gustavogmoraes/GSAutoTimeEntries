@@ -1,0 +1,126 @@
+C:\Users\gustavo.moraes\Documents\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\bin\Debug\LancamentoHoras.exe.config
+C:\Users\gustavo.moraes\Documents\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\bin\Debug\LancamentoHoras.exe
+C:\Users\gustavo.moraes\Documents\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\bin\Debug\LancamentoHoras.pdb
+C:\Users\gustavo.moraes\Documents\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\bin\Debug\Newtonsoft.Json.dll
+C:\Users\gustavo.moraes\Documents\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\bin\Debug\VisualEffects.dll
+C:\Users\gustavo.moraes\Documents\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\bin\Debug\WebDriver.dll
+C:\Users\gustavo.moraes\Documents\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\bin\Debug\VisualEffects.pdb
+C:\Users\gustavo.moraes\Documents\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\bin\Debug\Newtonsoft.Json.xml
+C:\Users\gustavo.moraes\Documents\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\bin\Debug\WebDriver.xml
+C:\Users\gustavo.moraes\Documents\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\obj\x86\Debug\LancamentoHoras.csprojAssemblyReference.cache
+C:\Users\gustavo.moraes\Documents\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\obj\x86\Debug\Interop.IWshRuntimeLibrary.dll
+C:\Users\gustavo.moraes\Documents\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\obj\x86\Debug\LancamentoHoras.csproj.ResolveComReference.cache
+C:\Users\gustavo.moraes\Documents\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\obj\x86\Debug\LancamentoHoras.UI.frmLancamentoCorretivo.resources
+C:\Users\gustavo.moraes\Documents\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\obj\x86\Debug\LancamentoHoras.Properties.Resources.resources
+C:\Users\gustavo.moraes\Documents\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\obj\x86\Debug\LancamentoHoras.UI.frmPrincipal.resources
+C:\Users\gustavo.moraes\Documents\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\obj\x86\Debug\LancamentoHoras.UI.frmProgress.resources
+C:\Users\gustavo.moraes\Documents\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\obj\x86\Debug\LancamentoHoras.UI.UserControls.ucBorders.resources
+C:\Users\gustavo.moraes\Documents\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\obj\x86\Debug\LancamentoHoras.UI.UserControls.ucConfiguracao.resources
+C:\Users\gustavo.moraes\Documents\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\obj\x86\Debug\LancamentoHoras.csproj.GenerateResource.cache
+C:\Users\gustavo.moraes\Documents\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\obj\x86\Debug\LancamentoHoras.csproj.CoreCompileInputs.cache
+C:\Users\gustavo.moraes\Documents\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\obj\x86\Debug\LancamentoHoras.csproj.CopyComplete
+C:\Users\gustavo.moraes\Documents\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\obj\x86\Debug\LancamentoHoras.exe
+C:\Users\gustavo.moraes\Documents\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\obj\x86\Debug\LancamentoHoras.pdb
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\bin\Debug\LancamentoHoras.exe.config
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\bin\Debug\LancamentoHoras.exe
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\bin\Debug\LancamentoHoras.pdb
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\bin\Debug\MetroFramework.Design.dll
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\bin\Debug\MetroFramework.dll
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\bin\Debug\MetroFramework.Fonts.dll
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\bin\Debug\Newtonsoft.Json.dll
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\bin\Debug\VisualEffects.dll
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\bin\Debug\WebDriver.dll
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\bin\Debug\VisualEffects.pdb
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\bin\Debug\Newtonsoft.Json.xml
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\bin\Debug\WebDriver.xml
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\obj\x86\Debug\LancamentoHoras.csprojAssemblyReference.cache
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\obj\x86\Debug\Interop.IWshRuntimeLibrary.dll
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\obj\x86\Debug\LancamentoHoras.csproj.ResolveComReference.cache
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\obj\x86\Debug\LancamentoHoras.UI.frmLancamentoCorretivo.resources
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\obj\x86\Debug\LancamentoHoras.Properties.Resources.resources
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\obj\x86\Debug\LancamentoHoras.UI.frmLancamentoDiario.resources
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\obj\x86\Debug\LancamentoHoras.UI.frmPopupDiario.resources
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\obj\x86\Debug\LancamentoHoras.UI.frmPrincipal.resources
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\obj\x86\Debug\LancamentoHoras.UI.frmProgress.resources
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\obj\x86\Debug\LancamentoHoras.UI.UserControls.GSMultiTextBox.resources
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\obj\x86\Debug\LancamentoHoras.UI.UserControls.ucBorders.resources
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\obj\x86\Debug\LancamentoHoras.UI.UserControls.ucConfiguracao.resources
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\obj\x86\Debug\LancamentoHoras.csproj.GenerateResource.cache
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\obj\x86\Debug\LancamentoHoras.csproj.CoreCompileInputs.cache
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\obj\x86\Debug\LancamentoHoras.csproj.CopyComplete
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\obj\x86\Debug\LancamentoHoras.exe
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\LancamentoHoras\obj\x86\Debug\LancamentoHoras.pdb
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\GSAutoTimeEntries\LancamentoHoras\bin\Debug\LancamentoHoras.exe.config
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\GSAutoTimeEntries\LancamentoHoras\bin\Debug\LancamentoHoras.exe
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\GSAutoTimeEntries\LancamentoHoras\bin\Debug\LancamentoHoras.pdb
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\GSAutoTimeEntries\LancamentoHoras\bin\Debug\MetroFramework.Design.dll
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\GSAutoTimeEntries\LancamentoHoras\bin\Debug\MetroFramework.dll
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\GSAutoTimeEntries\LancamentoHoras\bin\Debug\MetroFramework.Fonts.dll
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\GSAutoTimeEntries\LancamentoHoras\bin\Debug\Newtonsoft.Json.dll
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\GSAutoTimeEntries\LancamentoHoras\bin\Debug\VisualEffects.dll
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\GSAutoTimeEntries\LancamentoHoras\bin\Debug\WebDriver.dll
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\GSAutoTimeEntries\LancamentoHoras\bin\Debug\VisualEffects.pdb
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\GSAutoTimeEntries\LancamentoHoras\bin\Debug\Newtonsoft.Json.xml
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\GSAutoTimeEntries\LancamentoHoras\bin\Debug\WebDriver.xml
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\GSAutoTimeEntries\LancamentoHoras\obj\x86\Debug\LancamentoHoras.csprojAssemblyReference.cache
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\GSAutoTimeEntries\LancamentoHoras\obj\x86\Debug\Interop.IWshRuntimeLibrary.dll
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\GSAutoTimeEntries\LancamentoHoras\obj\x86\Debug\LancamentoHoras.csproj.ResolveComReference.cache
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\GSAutoTimeEntries\LancamentoHoras\obj\x86\Debug\LancamentoHoras.UI.frmLancamentoCorretivo.resources
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\GSAutoTimeEntries\LancamentoHoras\obj\x86\Debug\LancamentoHoras.Properties.Resources.resources
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\GSAutoTimeEntries\LancamentoHoras\obj\x86\Debug\LancamentoHoras.UI.frmLancamentoDiario.resources
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\GSAutoTimeEntries\LancamentoHoras\obj\x86\Debug\LancamentoHoras.UI.frmPopupDiario.resources
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\GSAutoTimeEntries\LancamentoHoras\obj\x86\Debug\LancamentoHoras.UI.frmPrincipal.resources
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\GSAutoTimeEntries\LancamentoHoras\obj\x86\Debug\LancamentoHoras.UI.frmProgress.resources
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\GSAutoTimeEntries\LancamentoHoras\obj\x86\Debug\LancamentoHoras.UI.UserControls.GSMultiTextBox.resources
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\GSAutoTimeEntries\LancamentoHoras\obj\x86\Debug\LancamentoHoras.UI.UserControls.ucBorders.resources
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\GSAutoTimeEntries\LancamentoHoras\obj\x86\Debug\LancamentoHoras.UI.UserControls.ucConfiguracao.resources
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\GSAutoTimeEntries\LancamentoHoras\obj\x86\Debug\LancamentoHoras.csproj.GenerateResource.cache
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\GSAutoTimeEntries\LancamentoHoras\obj\x86\Debug\LancamentoHoras.csproj.CoreCompileInputs.cache
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\GSAutoTimeEntries\LancamentoHoras\obj\x86\Debug\LancamentoHoras.csproj.CopyComplete
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\GSAutoTimeEntries\LancamentoHoras\obj\x86\Debug\LancamentoHoras.exe
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\GSAutoTimeEntries\LancamentoHoras\obj\x86\Debug\LancamentoHoras.pdb
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\bin\Debug\LancamentoHoras.exe.config
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\bin\Debug\LancamentoHoras.exe
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\bin\Debug\LancamentoHoras.pdb
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\bin\Debug\MetroFramework.Design.dll
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\bin\Debug\MetroFramework.dll
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\bin\Debug\MetroFramework.Fonts.dll
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\bin\Debug\Newtonsoft.Json.dll
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\bin\Debug\VisualEffects.dll
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\bin\Debug\WebDriver.dll
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\bin\Debug\VisualEffects.pdb
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\bin\Debug\Newtonsoft.Json.xml
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\bin\Debug\WebDriver.xml
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\obj\x86\Debug\LancamentoHoras.csprojAssemblyReference.cache
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\obj\x86\Debug\Interop.IWshRuntimeLibrary.dll
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\obj\x86\Debug\LancamentoHoras.csproj.ResolveComReference.cache
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\obj\x86\Debug\LancamentoHoras.UI.frmLancamentoCorretivo.resources
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\obj\x86\Debug\LancamentoHoras.Properties.Resources.resources
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\obj\x86\Debug\LancamentoHoras.UI.frmLancamentoDiario.resources
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\obj\x86\Debug\LancamentoHoras.UI.frmPopupDiario.resources
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\obj\x86\Debug\LancamentoHoras.UI.frmPrincipal.resources
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\obj\x86\Debug\LancamentoHoras.UI.frmProgress.resources
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\obj\x86\Debug\LancamentoHoras.UI.UserControls.GSMultiTextBox.resources
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\obj\x86\Debug\LancamentoHoras.UI.UserControls.ucBorders.resources
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\obj\x86\Debug\LancamentoHoras.UI.UserControls.ucConfiguracao.resources
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\obj\x86\Debug\LancamentoHoras.csproj.GenerateResource.cache
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\obj\x86\Debug\LancamentoHoras.csproj.CoreCompileInputs.cache
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\obj\x86\Debug\LancamentoHoras.csproj.CopyComplete
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\obj\x86\Debug\LancamentoHoras.exe
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\obj\x86\Debug\LancamentoHoras.pdb
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\bin\Debug\Microsoft.Owin.dll
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\bin\Debug\Microsoft.Owin.Hosting.dll
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\bin\Debug\Owin.dll
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\bin\Debug\System.Net.Http.Formatting.dll
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\bin\Debug\System.Web.Http.dll
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\bin\Debug\System.Web.Http.Owin.dll
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\bin\Debug\Microsoft.Owin.xml
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\bin\Debug\Microsoft.Owin.Hosting.xml
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\bin\Debug\System.Net.Http.Formatting.xml
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\bin\Debug\System.Web.Http.xml
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\bin\Debug\System.Web.Http.Owin.xml
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\bin\Debug\Microsoft.Owin.Host.HttpListener.dll
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\bin\Debug\Microsoft.Owin.Host.HttpListener.xml
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\bin\Debug\System.Web.Cors.dll
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\bin\Debug\System.Web.Http.Cors.dll
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\LancamentoHoras\bin\Debug\System.Web.Http.Cors.xml
