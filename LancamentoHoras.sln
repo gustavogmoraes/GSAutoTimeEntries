@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28803.452
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GSAutoTimeEntries", "GSAutoTimeEntries\GSAutoTimeEntries.csproj", "{662783DE-8137-4FFB-B981-48EFE60C784E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GSAutoTimeEntries", "AutoTimeEntries\GSAutoTimeEntries.csproj", "{662783DE-8137-4FFB-B981-48EFE60C784E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualEffects", "VisualEffects_1.2\VisualEffects\VisualEffects.csproj", "{88C2E4D2-1237-4616-9F74-2D0A4AF06009}"
 EndProject
