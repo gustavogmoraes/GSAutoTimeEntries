@@ -16,7 +16,5 @@ D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\GSAutoTime
 D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras\GSAutoTimeEntries\VisualEffects_1.2\VisualEffects\obj\Debug\VisualEffects.pdb
 D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\VisualEffects_1.2\VisualEffects\bin\Debug\VisualEffects.dll
 D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\VisualEffects_1.2\VisualEffects\bin\Debug\VisualEffects.pdb
-D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\VisualEffects_1.2\VisualEffects\obj\Debug\VisualEffects.csproj.CoreCompileInputs.cache
 D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\VisualEffects_1.2\VisualEffects\obj\Debug\VisualEffects.dll
 D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\VisualEffects_1.2\VisualEffects\obj\Debug\VisualEffects.pdb
-D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\VisualEffects_1.2\VisualEffects\obj\Debug\VisualEffects.csprojAssemblyReference.cache

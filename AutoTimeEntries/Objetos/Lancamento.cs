@@ -8,7 +8,12 @@ namespace GSAutoTimeEntriesWebApi.Objetos
 {
     public class Lancamento
     {
-        public string Data { get; set; }
+        // Não tirar, o LiteDB precisa desse Id
+        public Guid Id { get; set; }
+
+        public bool Dispensado { get; set; }
+
+        public DateTime Data { get; set; }
 
         private List<TimeSpan> _batidas;
         public List<TimeSpan> Batidas

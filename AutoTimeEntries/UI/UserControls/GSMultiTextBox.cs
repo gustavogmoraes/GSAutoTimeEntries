@@ -16,20 +16,21 @@ namespace GSAutoTimeEntries.UI.UserControls
     public partial class GSMultiTextBox : UserControl
     {
 
-        List<string> Atividades { get; set; }
+        Dictionary<string, string> Atividades { get; set; }
 
-        public GSMultiTextBox(Lancamento lancamento, List<string> atividades)
+        public GSMultiTextBox(Lancamento lancamento, Dictionary<string, string> atividades)
         {
             InitializeComponent();
 
             Atividades = atividades;
+
+            cbLinkAtividade.Items.AddRange(Atividades.Keys.Cast<object>().ToArray());
 
             Horas = lancamento.Horas;
             LinkAtividade = lancamento.LinkAtividade;
             Atividade = lancamento.TipoAtividade;
 
             ValideAtividade(LinkAtividade);
-
         }
 
         public double Horas
@@ -38,16 +39,20 @@ namespace GSAutoTimeEntries.UI.UserControls
 
             set
             {
+                if (value == 0)
+                {
+                    return;
+                }
+
                 lblHoras.Text = $"{value:F1}";
 
                 var frmPopup = GerenciadorDeForms.Obtenha<frmPopupDiario>();
-                if (frmPopup != null)
-                {
-                    var totalHoras = frmPopup.TotalDeHoras;
-                    var totalWidth = 225;
+                if (frmPopup == null) return;
 
-                    pnlHoras.Width = Convert.ToInt32(totalWidth * value / totalHoras);
-                }
+                var totalHoras = frmPopup.TotalDeHoras;
+                const int totalWidth = 132;
+
+                pnlHoras.Width = Convert.ToInt32(totalWidth * value / totalHoras);
             }
         }
 
@@ -64,8 +69,8 @@ namespace GSAutoTimeEntries.UI.UserControls
             {
                 foreach (var controle in painel.Controls)
                 {
-                    (controle as GSMultiTextBox).btnAdicionar.Visible = false;
-                    (controle as GSMultiTextBox).btnRemover.Visible = true;
+                    ((GSMultiTextBox) controle).btnAdicionar.Visible = false;
+                    ((GSMultiTextBox) controle).btnRemover.Visible = true;
                 }
 
                 var ultimaBox = painel.Controls.Find("GSMultiTextBox", false).Last() as GSMultiTextBox;
@@ -105,7 +110,7 @@ namespace GSAutoTimeEntries.UI.UserControls
             // Caso seja o primeiro, soma com o debaixo
             if (index == 0) index = 2;
 
-            (painel.Controls[index - 1] as GSMultiTextBox).Horas += Horas;
+            ((GSMultiTextBox) painel.Controls[index - 1]).Horas += Horas;
 
             painel.Controls.Remove(this);
 
@@ -192,6 +197,81 @@ namespace GSAutoTimeEntries.UI.UserControls
         private void CbAtividade_SelectedIndexChanged(object sender, EventArgs e)
         {
             Atividade = (string)cbAtividade.SelectedItem;
+        }
+
+        private void CbLinkAtividade_Click(object sender, EventArgs e)
+        {
+            //const int tempSize = 272;
+
+            //cbLinkAtividade.Width = tempSize;
+        }
+
+        private void CbLinkAtividade_Leave(object sender, EventArgs e)
+        {
+            //const int originalSize = 166;
+
+            //cbLinkAtividade.Width = originalSize;
+        }
+
+        private void CbLinkAtividade_DropDown(object sender, EventArgs e)
+        {
+            const int tempLocation = 6;
+            const int tempSize = 500;
+            const int dropTempSize = 700;
+
+            cbLinkAtividade.Location = new Point(tempLocation, cbLinkAtividade.Location.Y);
+            cbLinkAtividade.Width = tempSize;
+            cbLinkAtividade.DropDownWidth = dropTempSize;
+        }
+
+        private void CbLinkAtividade_DropDownClosed(object sender, EventArgs e)
+        {
+            const int originalLocation = 272;
+            const int originalSize = 166;
+            const int dropOriginalSize = 400;
+
+            cbLinkAtividade.Location = new Point(originalLocation, cbLinkAtividade.Location.Y);
+            cbLinkAtividade.Width = originalSize;
+            cbLinkAtividade.DropDownWidth = dropOriginalSize;
+        }
+
+        private void CbLinkAtividade_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if ((string)cbLinkAtividade.SelectedItem == ">>> Entrar com link manualmente <<<")
+            {
+                cbLinkAtividade.Visible = false;
+                txtLink.Visible = true;
+                txtLink.BringToFront();
+
+                btnVoltarComboLink.Visible = true;
+
+                PodeProsseguir = false;
+                return;
+            }
+
+            if (cbLinkAtividade.SelectedItem == null) return;
+
+            LinkAtividade = Atividades[cbLinkAtividade.SelectedItem?.ToString()];
+            PodeProsseguir = true;
+        }
+
+        private void BtnVoltarComboLink_Click(object sender, EventArgs e)
+        {
+            txtLink.Visible = false;
+            btnVoltarComboLink.Visible = false;
+
+            cbLinkAtividade.Visible = true;
+            cbLinkAtividade.SelectedItem = null;
+        }
+
+        private void TxtLink_Enter(object sender, EventArgs e)
+        {
+            txtLink.Width = 400;
+        }
+
+        private void TxtLink_Leave(object sender, EventArgs e)
+        {
+            txtLink.Width = 140;
         }
     }
 }

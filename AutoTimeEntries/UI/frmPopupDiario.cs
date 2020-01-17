@@ -37,7 +37,7 @@ namespace GSAutoTimeEntries.UI
 
             _lancamento = lancamento;
             TotalDeHoras = lancamento.Horas;
-            DataLancamento = lancamento.Data;
+            DataLancamento = lancamento.Data.ConvertaParaDataPtBr();
             lblOque.Text = string.Format(lblOque.Text, DataLancamento);
             lblTotalHoras.Text = TotalDeHoras.ToString();
 
@@ -56,13 +56,12 @@ namespace GSAutoTimeEntries.UI
                     {
                         Trate(sender, e);
                     }
-                         
                 };
 
                 flpBatidas.Controls.Add(textBox);
             }
 
-            flpLancamentos.Controls.Add(new GSMultiTextBox(lancamento, Atividades.Keys.ToList()));
+            flpLancamentos.Controls.Add(new GSMultiTextBox(lancamento, Atividades));
         }
 
         public void Trate(object sender, object e)
@@ -70,10 +69,10 @@ namespace GSAutoTimeEntries.UI
             if(!Limpando)
             {
                 var regex = @"^(?:[01]\d|2[0123]):(?:[012345]\d)$";
-                if ((sender as MetroTextBox).Text.Length > 6 || !Regex.IsMatch((sender as MetroTextBox).Text, regex, RegexOptions.None))
+                if (((MetroTextBox) sender).Text.Length > 6 || !Regex.IsMatch((sender as MetroTextBox).Text, regex, RegexOptions.None))
                 {
                     MessageBox.Show(@"Formato inválido para a batida, o formato correto é no padrão hh:mm");
-                    (sender as MetroTextBox).Text = string.Empty;
+                    ((MetroTextBox) sender).Text = string.Empty;
 
                     return;
                 }
@@ -103,7 +102,7 @@ namespace GSAutoTimeEntries.UI
             _lancamento.Batidas.Clear();
             foreach(var textBox in flpBatidas.Controls)
             {
-                _lancamento.Batidas.Add(ObtenhaBatida((textBox as MetroTextBox).Text.ToString()));
+                _lancamento.Batidas.Add(ObtenhaBatida(((MetroTextBox) textBox).Text));
             }
 
             _lancamento.CalculeHoras();
@@ -113,6 +112,11 @@ namespace GSAutoTimeEntries.UI
 
         private TimeSpan ObtenhaBatida(string batida)
         {
+            if (string.IsNullOrEmpty(batida))
+            {
+                return TimeSpan.Zero;
+            }
+
             var splitted = batida.Split(':');
 
             return new TimeSpan(Convert.ToInt32(splitted[0]), Convert.ToInt32(splitted[1]), 0);
@@ -149,46 +153,32 @@ namespace GSAutoTimeEntries.UI
 
             if (dialogResult == DialogResult.Yes)
             {
+                ServicoDeLancamentoDiario.DispenseLancamento(_lancamento);
                 Dispose();
-                //ServicoDeLancamentoDiario.DispenseLancamento(_lancamento);
             }
         }
 
         private void BtnEfetuarLancamento_Click(object sender, EventArgs e)
         {
-            var form = GerenciadorDeForms.Obtenha<frmLancamentoProvisorio>();
             var lancamentos = ObtenhaLancamentosEmTela();
-            var row = form.dataGridView1.Rows.OfType<DataGridViewRow>()
-                                        .FirstOrDefault(x => x.Cells[0].Value.ToString() == DataLancamento);
-
-            if (form.Lancamentos.ContainsKey(_lancamento.Data))
-            {
-                form.Lancamentos[_lancamento.Data].Clear();
-                form.Lancamentos[_lancamento.Data].AddRange(lancamentos);
-            }
-            else
-            {
-                form.Lancamentos.Add(_lancamento.Data, lancamentos);
-            }
-
-            row.Cells[2].Value = "Ok";
-            row.Cells[1].Value = TotalDeHoras.ToString();
-            form.CheckButtonLancamento();
 
             GerenciadorDeForms.Apague<frmPopupDiario>();
 
-            //ServicoDeLancamentoDiario.EfetueLancamentos(lancamentos);
+            ServicoDeLancamentoDiario.EfetueLancamentos(lancamentos);
         }
 
-        private Lancamento LeiaLancamento(GSMultiTextBox multiTextBox) =>
-            new Lancamento
+        private Lancamento LeiaLancamento(GSMultiTextBox multiTextBox) 
+        {
+            return new Lancamento
             {
                 Batidas = _lancamento.Batidas,
-                Data = DataLancamento,
+                Data = DataLancamento.ParaDateTime(),
                 Horas = multiTextBox.Horas,
                 LinkAtividade = multiTextBox.LinkAtividade,
                 TipoAtividade = multiTextBox.Atividade//Atividades[multiTextBox.Atividade]
             };
+        }
+            
 
         private List<Lancamento> ObtenhaLancamentosEmTela()
         {
@@ -202,6 +192,35 @@ namespace GSAutoTimeEntries.UI
             }
 
             return listaDeLancamentos;
+        }
+
+        private void MetroButton1_Click(object sender, EventArgs e)
+        {
+            var textBox = new MetroTextBox
+            {
+                Size = new Size(43, 23),
+                FontSize = MetroFramework.MetroTextBoxSize.Medium,
+                Text = string.Empty
+            };
+
+            textBox.Leave += Trate;
+            textBox.KeyDown += (sender1, e1) =>
+            {
+                if (new[] { Keys.Return, Keys.Enter }.Contains(e1.KeyCode))
+                {
+                    Trate(sender1, e1);
+                }
+            };
+
+            flpBatidas.Controls.Add(textBox);
+        }
+
+        private void MetroButton2_Click(object sender, EventArgs e)
+        {
+            ((MetroTextBox) flpBatidas.Controls.OfType<Control>().Last()).Text = "00:00";
+            Trate(flpBatidas.Controls.OfType<Control>().Last(), e);
+
+            flpBatidas.Controls.Remove(flpBatidas.Controls.OfType<Control>().Last());
         }
     }
 }

@@ -41,9 +41,9 @@
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
             this.ucConfiguracao1 = new GSAutoTimeEntries.UI.UserControls.ucConfiguracao();
             this.ucBorders1 = new GSAutoTimeEntries.UI.UserControls.ucBorders();
-            this.button4 = new System.Windows.Forms.Button();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -123,7 +123,6 @@
             this.btnDiario.TabIndex = 6;
             this.btnDiario.Text = "Diário";
             this.btnDiario.UseVisualStyleBackColor = false;
-            this.btnDiario.Visible = false;
             this.btnDiario.Click += new System.EventHandler(this.BtnDiario_Click);
             // 
             // btnCorretivo
@@ -165,7 +164,24 @@
             this.button2.TabIndex = 12;
             this.button2.Text = "Lançamento";
             this.button2.UseVisualStyleBackColor = false;
+            this.button2.Visible = false;
             this.button2.Click += new System.EventHandler(this.Button2_Click);
+            // 
+            // button4
+            // 
+            this.button4.BackColor = System.Drawing.Color.Gainsboro;
+            this.button4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button4.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button4.ForeColor = System.Drawing.Color.Black;
+            this.button4.Location = new System.Drawing.Point(224, 91);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(170, 127);
+            this.button4.TabIndex = 14;
+            this.button4.Text = "Correção";
+            this.button4.UseVisualStyleBackColor = false;
+            this.button4.Visible = false;
+            this.button4.Click += new System.EventHandler(this.Button4_Click);
             // 
             // ucConfiguracao1
             // 
@@ -183,21 +199,6 @@
             this.ucBorders1.Name = "ucBorders1";
             this.ucBorders1.Size = new System.Drawing.Size(831, 30);
             this.ucBorders1.TabIndex = 9;
-            // 
-            // button4
-            // 
-            this.button4.BackColor = System.Drawing.Color.Gainsboro;
-            this.button4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button4.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.ForeColor = System.Drawing.Color.Black;
-            this.button4.Location = new System.Drawing.Point(224, 91);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(170, 127);
-            this.button4.TabIndex = 14;
-            this.button4.Text = "Correção";
-            this.button4.UseVisualStyleBackColor = false;
-            this.button4.Click += new System.EventHandler(this.Button4_Click);
             // 
             // frmPrincipal
             // 

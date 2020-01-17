@@ -35,6 +35,8 @@
             this.flpBatidas = new System.Windows.Forms.FlowLayoutPanel();
             this.btnEfetuarLancamento = new System.Windows.Forms.Button();
             this.btnNaoLancar = new System.Windows.Forms.Button();
+            this.metroButton1 = new MetroFramework.Controls.MetroButton();
+            this.metroButton2 = new MetroFramework.Controls.MetroButton();
             this.SuspendLayout();
             // 
             // lblOque
@@ -62,7 +64,7 @@
             // 
             this.lblTotalHoras.AutoSize = true;
             this.lblTotalHoras.FontSize = MetroFramework.MetroLabelSize.Tall;
-            this.lblTotalHoras.Location = new System.Drawing.Point(733, 63);
+            this.lblTotalHoras.Location = new System.Drawing.Point(532, 63);
             this.lblTotalHoras.Name = "lblTotalHoras";
             this.lblTotalHoras.Size = new System.Drawing.Size(34, 25);
             this.lblTotalHoras.TabIndex = 2;
@@ -72,7 +74,7 @@
             // 
             this.lblTotal.AutoSize = true;
             this.lblTotal.FontSize = MetroFramework.MetroLabelSize.Tall;
-            this.lblTotal.Location = new System.Drawing.Point(614, 63);
+            this.lblTotal.Location = new System.Drawing.Point(413, 63);
             this.lblTotal.Name = "lblTotal";
             this.lblTotal.Size = new System.Drawing.Size(121, 25);
             this.lblTotal.TabIndex = 3;
@@ -109,8 +111,27 @@
             this.btnNaoLancar.TabIndex = 6;
             this.btnNaoLancar.Text = "Dispensar lançamento";
             this.btnNaoLancar.UseVisualStyleBackColor = false;
-            this.btnNaoLancar.Visible = false;
             this.btnNaoLancar.Click += new System.EventHandler(this.BtnNaoLancar_Click);
+            // 
+            // metroButton1
+            // 
+            this.metroButton1.Location = new System.Drawing.Point(571, 63);
+            this.metroButton1.Name = "metroButton1";
+            this.metroButton1.Size = new System.Drawing.Size(96, 23);
+            this.metroButton1.TabIndex = 0;
+            this.metroButton1.Text = "Adicionar batida";
+            this.metroButton1.UseSelectable = true;
+            this.metroButton1.Click += new System.EventHandler(this.MetroButton1_Click);
+            // 
+            // metroButton2
+            // 
+            this.metroButton2.Location = new System.Drawing.Point(679, 63);
+            this.metroButton2.Name = "metroButton2";
+            this.metroButton2.Size = new System.Drawing.Size(96, 23);
+            this.metroButton2.TabIndex = 7;
+            this.metroButton2.Text = "Remover batida";
+            this.metroButton2.UseSelectable = true;
+            this.metroButton2.Click += new System.EventHandler(this.MetroButton2_Click);
             // 
             // frmPopupDiario
             // 
@@ -119,6 +140,8 @@
             this.BorderStyle = MetroFramework.Forms.MetroFormBorderStyle.FixedSingle;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.ControlBox = false;
+            this.Controls.Add(this.metroButton2);
+            this.Controls.Add(this.metroButton1);
             this.Controls.Add(this.btnNaoLancar);
             this.Controls.Add(this.btnEfetuarLancamento);
             this.Controls.Add(this.flpBatidas);
@@ -150,5 +173,7 @@
         private System.Windows.Forms.FlowLayoutPanel flpBatidas;
         private System.Windows.Forms.Button btnNaoLancar;
         public System.Windows.Forms.Button btnEfetuarLancamento;
+        private MetroFramework.Controls.MetroButton metroButton1;
+        private MetroFramework.Controls.MetroButton metroButton2;
     }
 }

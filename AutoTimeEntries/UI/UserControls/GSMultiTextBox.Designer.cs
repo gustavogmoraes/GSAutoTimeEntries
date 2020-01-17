@@ -37,6 +37,8 @@
             this.txtInputBox = new System.Windows.Forms.TextBox();
             this.txtLink = new MetroFramework.Controls.MetroTextBox();
             this.cbAtividade = new MetroFramework.Controls.MetroComboBox();
+            this.cbLinkAtividade = new MetroFramework.Controls.MetroComboBox();
+            this.btnVoltarComboLink = new MetroFramework.Controls.MetroButton();
             this.SuspendLayout();
             // 
             // btnRemover
@@ -68,7 +70,7 @@
             this.pnlHoras.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.pnlHoras.BackColor = System.Drawing.Color.SkyBlue;
             this.pnlHoras.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlHoras.Location = new System.Drawing.Point(3, 3);
+            this.pnlHoras.Location = new System.Drawing.Point(3, 4);
             this.pnlHoras.Name = "pnlHoras";
             this.pnlHoras.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.pnlHoras.Size = new System.Drawing.Size(132, 25);
@@ -78,7 +80,7 @@
             // 
             this.lblHoras.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblHoras.AutoSize = true;
-            this.lblHoras.Location = new System.Drawing.Point(142, 8);
+            this.lblHoras.Location = new System.Drawing.Point(142, 9);
             this.lblHoras.Name = "lblHoras";
             this.lblHoras.Size = new System.Drawing.Size(26, 19);
             this.lblHoras.TabIndex = 110;
@@ -97,7 +99,7 @@
             // 
             this.lblTextHoras.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblTextHoras.AutoSize = true;
-            this.lblTextHoras.Location = new System.Drawing.Point(172, 8);
+            this.lblTextHoras.Location = new System.Drawing.Point(172, 9);
             this.lblTextHoras.Name = "lblTextHoras";
             this.lblTextHoras.Size = new System.Drawing.Size(41, 19);
             this.lblTextHoras.TabIndex = 114;
@@ -120,7 +122,7 @@
             // 
             // 
             this.txtLink.CustomButton.Image = null;
-            this.txtLink.CustomButton.Location = new System.Drawing.Point(144, 1);
+            this.txtLink.CustomButton.Location = new System.Drawing.Point(118, 1);
             this.txtLink.CustomButton.Name = "";
             this.txtLink.CustomButton.Size = new System.Drawing.Size(21, 21);
             this.txtLink.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
@@ -139,16 +141,19 @@
             this.txtLink.SelectionLength = 0;
             this.txtLink.SelectionStart = 0;
             this.txtLink.ShortcutsEnabled = true;
-            this.txtLink.Size = new System.Drawing.Size(166, 23);
+            this.txtLink.Size = new System.Drawing.Size(140, 23);
             this.txtLink.TabIndex = 117;
             this.txtLink.UseSelectable = true;
             this.txtLink.WaterMark = "Link da atividade";
             this.txtLink.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.txtLink.WaterMarkFont = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtLink.TextChanged += new System.EventHandler(this.TxtLink_TextChanged);
+            this.txtLink.Enter += new System.EventHandler(this.TxtLink_Enter);
+            this.txtLink.Leave += new System.EventHandler(this.TxtLink_Leave);
             // 
             // cbAtividade
             // 
+            this.cbAtividade.DropDownWidth = 250;
             this.cbAtividade.FormattingEnabled = true;
             this.cbAtividade.ItemHeight = 23;
             this.cbAtividade.Items.AddRange(new object[] {
@@ -196,19 +201,49 @@
             "Trabalho"});
             this.cbAtividade.Location = new System.Drawing.Point(444, 1);
             this.cbAtividade.Name = "cbAtividade";
-            this.cbAtividade.PromptText = "Atividade";
+            this.cbAtividade.PromptText = "Tipo de atividade";
             this.cbAtividade.Size = new System.Drawing.Size(191, 29);
             this.cbAtividade.TabIndex = 119;
             this.cbAtividade.UseSelectable = true;
             this.cbAtividade.SelectedIndexChanged += new System.EventHandler(this.CbAtividade_SelectedIndexChanged);
+            // 
+            // cbLinkAtividade
+            // 
+            this.cbLinkAtividade.DropDownWidth = 400;
+            this.cbLinkAtividade.FormattingEnabled = true;
+            this.cbLinkAtividade.ItemHeight = 23;
+            this.cbLinkAtividade.Items.AddRange(new object[] {
+            ">>> Entrar com link manualmente <<<"});
+            this.cbLinkAtividade.Location = new System.Drawing.Point(272, 1);
+            this.cbLinkAtividade.Name = "cbLinkAtividade";
+            this.cbLinkAtividade.PromptText = "Atividade";
+            this.cbLinkAtividade.Size = new System.Drawing.Size(166, 29);
+            this.cbLinkAtividade.TabIndex = 120;
+            this.cbLinkAtividade.UseSelectable = true;
+            this.cbLinkAtividade.DropDown += new System.EventHandler(this.CbLinkAtividade_DropDown);
+            this.cbLinkAtividade.SelectedIndexChanged += new System.EventHandler(this.CbLinkAtividade_SelectedIndexChanged);
+            this.cbLinkAtividade.DropDownClosed += new System.EventHandler(this.CbLinkAtividade_DropDownClosed);
+            this.cbLinkAtividade.Click += new System.EventHandler(this.CbLinkAtividade_Click);
+            this.cbLinkAtividade.Leave += new System.EventHandler(this.CbLinkAtividade_Leave);
+            // 
+            // btnVoltarComboLink
+            // 
+            this.btnVoltarComboLink.Location = new System.Drawing.Point(414, 5);
+            this.btnVoltarComboLink.Name = "btnVoltarComboLink";
+            this.btnVoltarComboLink.Size = new System.Drawing.Size(24, 23);
+            this.btnVoltarComboLink.TabIndex = 121;
+            this.btnVoltarComboLink.Text = "<";
+            this.btnVoltarComboLink.UseSelectable = true;
+            this.btnVoltarComboLink.Click += new System.EventHandler(this.BtnVoltarComboLink_Click);
             // 
             // GSMultiTextBox
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Controls.Add(this.cbLinkAtividade);
+            this.Controls.Add(this.btnVoltarComboLink);
             this.Controls.Add(this.cbAtividade);
-            this.Controls.Add(this.txtLink);
             this.Controls.Add(this.txtInputBox);
             this.Controls.Add(this.lblTextHoras);
             this.Controls.Add(this.metroLabel2);
@@ -216,8 +251,9 @@
             this.Controls.Add(this.pnlHoras);
             this.Controls.Add(this.btnRemover);
             this.Controls.Add(this.btnAdicionar);
+            this.Controls.Add(this.txtLink);
             this.Name = "GSMultiTextBox";
-            this.Size = new System.Drawing.Size(741, 31);
+            this.Size = new System.Drawing.Size(741, 33);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -233,5 +269,7 @@
         private System.Windows.Forms.TextBox txtInputBox;
         private MetroFramework.Controls.MetroTextBox txtLink;
         private MetroFramework.Controls.MetroComboBox cbAtividade;
+        private MetroFramework.Controls.MetroComboBox cbLinkAtividade;
+        private MetroFramework.Controls.MetroButton btnVoltarComboLink;
     }
 }

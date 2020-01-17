@@ -31,14 +31,9 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.button1 = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.colunaData = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colunaHoras = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colunaAtividade = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.colunaComentario = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colunaExatoOuNaoTrabalhado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cbAtividade = new System.Windows.Forms.ComboBox();
             this.txtComentario = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -59,8 +54,14 @@
             this.itemExcluir = new System.Windows.Forms.ToolStripMenuItem();
             this.itemDuplicar = new System.Windows.Forms.ToolStripMenuItem();
             this.button2 = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.metroGrid1 = new MetroFramework.Controls.MetroGrid();
+            this.dateColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.hoursColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.linkAtividadeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.atividadeColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.comentarioColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.contextMenuGrid.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.metroGrid1)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -75,118 +76,6 @@
             this.button1.Text = "Obter registro de ponto";
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.BackgroundColor = System.Drawing.Color.LightGray;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.GrayText;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colunaData,
-            this.colunaHoras,
-            this.colunaAtividade,
-            this.colunaComentario,
-            this.colunaExatoOuNaoTrabalhado});
-            this.dataGridView1.Location = new System.Drawing.Point(13, 279);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4);
-            this.dataGridView1.Name = "dataGridView1";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.Size = new System.Drawing.Size(1012, 377);
-            this.dataGridView1.TabIndex = 2;
-            this.dataGridView1.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseClick);
-            this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
-            this.dataGridView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DataGridView1_KeyDown);
-            // 
-            // colunaData
-            // 
-            this.colunaData.HeaderText = "Data";
-            this.colunaData.Name = "colunaData";
-            this.colunaData.Width = 80;
-            // 
-            // colunaHoras
-            // 
-            this.colunaHoras.HeaderText = "Horas";
-            this.colunaHoras.Name = "colunaHoras";
-            this.colunaHoras.Width = 60;
-            // 
-            // colunaAtividade
-            // 
-            this.colunaAtividade.HeaderText = "Atividade";
-            this.colunaAtividade.Items.AddRange(new object[] {
-            "Alinhamento de Requisitos",
-            "Análise",
-            "Análise de viabilidade",
-            "Apoio a outra equipe",
-            "Autodesenvolvimento",
-            "Design",
-            "Extra-Projeto",
-            "GCS - Liberação de versão",
-            "GCS - Processo Artifactory",
-            "GCS - Processo TeamCity",
-            "Ginástica Laboral",
-            "Implementação",
-            "Ociosidade - Infraestrutura",
-            "Planejamento / Acompanhamento",
-            "Preparação de Ambiente",
-            "Processo",
-            "Processo - Criação de tarefas",
-            "Processo - GCS",
-            "Processo - CCA",
-            "Processo - Validação Escopo",
-            "Processo - Validação Help",
-            "Processo - Validar apropriação",
-            "Proposta de solução",
-            "Requisito",
-            "Retrabalho",
-            "Retrab - Análise de viabilidade",
-            "Retrab - Design",
-            "Retrab - Implementação",
-            "Retrab - Proposta de solução",
-            "Retrab - Requisito",
-            "Retrab - Teste",
-            "Reunião",
-            "Revisão - Design",
-            "Revisão - Implementação",
-            "Revisão - Proposta de Solução",
-            "Revisão - Requisitos",
-            "Suporte",
-            "Suporte - Externo",
-            "Suporte - Interno ",
-            "Teste",
-            "Treinamento",
-            "Trabalho"});
-            this.colunaAtividade.Name = "colunaAtividade";
-            this.colunaAtividade.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colunaAtividade.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.colunaAtividade.Width = 200;
-            // 
-            // colunaComentario
-            // 
-            this.colunaComentario.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colunaComentario.HeaderText = "Comentário";
-            this.colunaComentario.Name = "colunaComentario";
-            // 
-            // colunaExatoOuNaoTrabalhado
-            // 
-            this.colunaExatoOuNaoTrabalhado.HeaderText = "";
-            this.colunaExatoOuNaoTrabalhado.Name = "colunaExatoOuNaoTrabalhado";
-            this.colunaExatoOuNaoTrabalhado.Visible = false;
             // 
             // cbAtividade
             // 
@@ -470,12 +359,139 @@
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.Button2_Click);
             // 
+            // metroGrid1
+            // 
+            this.metroGrid1.AllowUserToAddRows = false;
+            this.metroGrid1.AllowUserToResizeRows = false;
+            this.metroGrid1.BackgroundColor = System.Drawing.Color.Gainsboro;
+            this.metroGrid1.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
+            this.metroGrid1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(174)))), ((int)(((byte)(219)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(198)))), ((int)(((byte)(247)))));
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.metroGrid1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.metroGrid1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.metroGrid1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dateColumn,
+            this.hoursColumn,
+            this.linkAtividadeColumn,
+            this.atividadeColumn,
+            this.comentarioColumn});
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(198)))), ((int)(((byte)(247)))));
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.metroGrid1.DefaultCellStyle = dataGridViewCellStyle2;
+            this.metroGrid1.EnableHeadersVisualStyles = false;
+            this.metroGrid1.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.metroGrid1.GridColor = System.Drawing.Color.White;
+            this.metroGrid1.Location = new System.Drawing.Point(13, 285);
+            this.metroGrid1.Name = "metroGrid1";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(174)))), ((int)(((byte)(219)))));
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(198)))), ((int)(((byte)(247)))));
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.metroGrid1.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.metroGrid1.RowHeadersVisible = false;
+            this.metroGrid1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.metroGrid1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.metroGrid1.Size = new System.Drawing.Size(1012, 371);
+            this.metroGrid1.TabIndex = 47;
+            this.metroGrid1.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.MetroGrid1_CellMouseClick);
+            this.metroGrid1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.MetroGrid1_CellValueChanged);
+            this.metroGrid1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MetroGrid1_KeyDown_1);
+            // 
+            // dateColumn
+            // 
+            this.dateColumn.HeaderText = "Data";
+            this.dateColumn.Name = "dateColumn";
+            // 
+            // hoursColumn
+            // 
+            this.hoursColumn.HeaderText = "Horas";
+            this.hoursColumn.Name = "hoursColumn";
+            // 
+            // linkAtividadeColumn
+            // 
+            this.linkAtividadeColumn.HeaderText = "Link Atividade";
+            this.linkAtividadeColumn.Name = "linkAtividadeColumn";
+            this.linkAtividadeColumn.Width = 150;
+            // 
+            // atividadeColumn
+            // 
+            this.atividadeColumn.HeaderText = "Tipo de atividade";
+            this.atividadeColumn.Items.AddRange(new object[] {
+            "Alinhamento de Requisitos",
+            "Análise",
+            "Análise de viabilidade",
+            "Apoio a outra equipe",
+            "Autodesenvolvimento",
+            "Design",
+            "Extra-Projeto",
+            "GCS - Liberação de versão",
+            "GCS - Processo Artifactory",
+            "GCS - Processo TeamCity",
+            "Ginástica Laboral",
+            "Implementação",
+            "Ociosidade - Infraestrutura",
+            "Planejamento / Acompanhamento",
+            "Preparação de Ambiente",
+            "Processo",
+            "Processo - Criação de tarefas",
+            "Processo - GCS",
+            "Processo - CCA",
+            "Processo - Validação Escopo",
+            "Processo - Validação Help",
+            "Processo - Validar apropriação",
+            "Proposta de solução",
+            "Requisito",
+            "Retrabalho",
+            "Retrab - Análise de viabilidade",
+            "Retrab - Design",
+            "Retrab - Implementação",
+            "Retrab - Proposta de solução",
+            "Retrab - Requisito",
+            "Retrab - Teste",
+            "Reunião",
+            "Revisão - Design",
+            "Revisão - Implementação",
+            "Revisão - Proposta de Solução",
+            "Revisão - Requisitos",
+            "Suporte",
+            "Suporte - Externo",
+            "Suporte - Interno ",
+            "Teste",
+            "Treinamento",
+            "Trabalho"});
+            this.atividadeColumn.Name = "atividadeColumn";
+            this.atividadeColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.atividadeColumn.Width = 200;
+            // 
+            // comentarioColumn
+            // 
+            this.comentarioColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.comentarioColumn.HeaderText = "Comentário";
+            this.comentarioColumn.Name = "comentarioColumn";
+            this.comentarioColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.comentarioColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
             // frmLancamentoCorretivo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BorderStyle = MetroFramework.Forms.MetroFormBorderStyle.FixedSingle;
             this.ClientSize = new System.Drawing.Size(1046, 703);
+            this.Controls.Add(this.metroGrid1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
@@ -493,7 +509,6 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtComentario);
-            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.button1);
             this.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4);
@@ -501,8 +516,8 @@
             this.Name = "frmLancamentoCorretivo";
             this.ShadowType = MetroFramework.Forms.MetroFormShadowType.SystemShadow;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmLancamentoCorretivo_FormClosed);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.contextMenuGrid.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.metroGrid1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -512,7 +527,6 @@
 
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.ComboBox cbAtividade;
         private System.Windows.Forms.TextBox txtComentario;
         private System.Windows.Forms.Label label1;
@@ -533,11 +547,12 @@
         private System.Windows.Forms.ToolStripMenuItem itemExcluir;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.ToolStripMenuItem itemDuplicar;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colunaData;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colunaHoras;
-        private System.Windows.Forms.DataGridViewComboBoxColumn colunaAtividade;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colunaComentario;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colunaExatoOuNaoTrabalhado;
+        private MetroFramework.Controls.MetroGrid metroGrid1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dateColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn hoursColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn linkAtividadeColumn;
+        private System.Windows.Forms.DataGridViewComboBoxColumn atividadeColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn comentarioColumn;
     }
 }
 

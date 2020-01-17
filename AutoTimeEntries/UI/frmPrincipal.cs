@@ -16,6 +16,7 @@ using MetroFramework.Forms;
 using System.Net.Http;
 using Newtonsoft.Json;
 using System.Text;
+using GSAutoTimeEntries.Objetos;
 using IWshRuntimeLibrary;
 using File = System.IO.File;
 
@@ -108,12 +109,20 @@ namespace GSAutoTimeEntries.UI
 
             InicieBotoes();
 
+
             if (Configuracao != null) CarregueConfiguracao();
-            if (Configuracao != null &&
-                                Configuracao.ConfiguraoLancamentoDiario != null &&
-                                Configuracao.ConfiguraoLancamentoDiario.Habilitar)
+
+            //
+
+            //using (var servicoDeLancamento = new ServicoDeLancamento(Configuracao))
+            //{
+            //    var atribs = servicoDeLancamento.ObtenhaAtividadesAtribuidas();
+            //}
+
+            //
+            if (Configuracao?.ConfiguraoLancamentoDiario != null && Configuracao.ConfiguraoLancamentoDiario.Habilitar)
             {
-                Task.Run(() => ServicoDeLancamentoDiario.Inicie());
+                Task.Run(ServicoDeLancamentoDiario.Inicie);
             }
         }
 
@@ -214,7 +223,7 @@ namespace GSAutoTimeEntries.UI
             var configuracao = new ServicoDeConfiguracao().ObtenhaConfiguracao();
             var lancamentos = new List<Lancamento>
             {
-                new Lancamento { LinkAtividade = "Retrabalho - Implementação", Data = "20/06/19", Horas = 8.0 }
+                new Lancamento { LinkAtividade = "Retrabalho - Implementação", Data = "20/06/19".ParaDateTime(), Horas = 8.0 }
             };
 
             var values = new Dictionary<string, string>

@@ -80,6 +80,10 @@ namespace GSAutoTimeEntries.Utils
             var dia = splitted[0];
             var mes = splitted[1];
             var ano = splitted[2];
+            if (ano.Length == 2)
+            {
+                ano = "20" + ano;
+            }
 
             return $"{ano}-{mes}-{dia}";
         }
@@ -126,6 +130,7 @@ namespace GSAutoTimeEntries.Utils
                         break;
                     }
 
+                    Thread.Sleep(50);
                     contagemDeRetries++;
                 }
             }
@@ -135,17 +140,17 @@ namespace GSAutoTimeEntries.Utils
         {
             chromeDriver.EspereElementoSerExibido(by);
 
-            chromeDriver.EspereCondicao(x =>
-            {
-                var elements = x.FindElements(by);
+            //chromeDriver.EspereCondicao(x =>
+            //{
+            //    var elements = x.FindElements(by);
 
-                return elements != null &&
-                       elements.Count > 0 &&
-                       elements.FirstOrDefault().Displayed &&
-                       elements.FirstOrDefault().Enabled;
-            });
+            //    return elements != null &&
+            //           elements.Count > 0 &&
+            //           elements.FirstOrDefault().Displayed &&
+            //           elements.FirstOrDefault().Enabled;
+            //}, 30);
 
-            new WebDriverWait(chromeDriver, new TimeSpan(0, 0, 10)).Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(by));
+            new WebDriverWait(chromeDriver, new TimeSpan(0, 0, 20)).Until(SeleniumExtras.WaitHelpers.ExpectedConditions.VisibilityOfAllElementsLocatedBy(by));
         }
 
         public static void EspereTempoEspecifico(this ChromeDriver driver, int segundos)
@@ -395,13 +400,30 @@ namespace GSAutoTimeEntries.Utils
             var splitted = time.Split('/');
             var dia = Convert.ToInt32(splitted[0]);
             var mes = Convert.ToInt32(splitted[1]);
-            var ano = Convert.ToInt32(splitted[2]);
+            var ano = Convert.ToInt32(splitted[2].Length == 2 ? "20" + splitted[2] : splitted[2]);
 
             return new DateTime(ano, mes, dia);
         }
         public static DateTime GetClosestDateTime(this DateTime timeToCompare, IList<DateTime> listOfTimes)
         {
             return listOfTimes.OrderBy(t => Math.Abs((t - timeToCompare).Ticks)).First();
+        }
+
+        public static By MultipleClasses(string expectedElementTag = "div", params string[] classes)
+        {
+            if (classes.Length == 0)
+            {
+                return null;
+            }
+
+            var filter = "and contains(@class, '" + string.Join("') and contains(@class, '", classes) + "')";
+
+            return By.XPath($"//{expectedElementTag}[contains(@class, '{classes.First()}') {filter}]");
+        }
+
+        public static void ScrollToElement(this ChromeDriver chromedriver, IWebElement element)
+        {
+            _ = ((IJavaScriptExecutor)chromedriver).ExecuteScript($"window.scroll({element.Location.X}, {element.Location.Y})");
         }
     }
 }

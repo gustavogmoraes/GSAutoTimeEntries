@@ -8,19 +8,19 @@ namespace GSAutoTimeEntries.Utils
     {
         public static void OnSessionSwitch(object sender, SessionSwitchEventArgs e)
         {
-            switch (e.Reason)
-            {
-                case SessionSwitchReason.SessionLock | SessionSwitchReason.SessionLogoff:
-                    Persistencia.UltimoBloqueio = Persistencia.HorarioAtual;
+            //switch (e.Reason)
+            //{
+            //    case SessionSwitchReason.SessionLock | SessionSwitchReason.SessionLogoff:
+            //        Persistencia.UltimoBloqueio = Persistencia.HorarioAtual;
 
-                    break;
+            //        break;
 
-                case SessionSwitchReason.SessionUnlock | SessionSwitchReason.SessionLogon:
-                    if (Persistencia.EhPrimeiroDesbloqueioDoDia) GerenciadorDeForms.Crie<frmLancamentoDiario>();
-                    Persistencia.UltimoDesbloqueio = Persistencia.HorarioAtual;
+            //    case SessionSwitchReason.SessionUnlock | SessionSwitchReason.SessionLogon:
+            //        if (Persistencia.EhPrimeiroDesbloqueioDoDia) GerenciadorDeForms.Crie<frmLancamentoDiario>();
+            //        Persistencia.UltimoDesbloqueio = Persistencia.HorarioAtual;
 
-                    break;
-            }
+            //        break;
+            //}
         }
     }
 }

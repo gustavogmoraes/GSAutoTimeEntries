@@ -107,7 +107,7 @@ namespace GSAutoTimeEntries.Servicos
 
             return listaDePontos.Select(x => new Lancamento
             {
-                Data = x.Data,
+                Data = x.Data.ParaDateTime(),
                 Batidas = x.HorariosDasBatidas.OrderBy(y => y).ToList()
             }).ToList();
         }

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using GSAutoTimeEntries.Properties;
 using GSAutoTimeEntries.Servicos;
+using GSAutoTimeEntries.Utils;
 using GSAutoTimeEntriesWebApi.Objetos;
 using MetroFramework.Forms;
 
@@ -71,7 +72,7 @@ namespace GSAutoTimeEntries.UI
             {
                 new Lancamento
                 {
-                    Data = data,
+                    Data = data.ParaDateTime(),
                     Batidas = new List<TimeSpan>
                     {
                         new TimeSpan(8, 0, 0),

@@ -50,7 +50,7 @@ namespace GSAutoTimeEntries.UI
 
         private Validador _validador { get; set; }
 
-        private Validador Validador { get { return _validador ?? (_validador = new Validador()); } }
+        private Validador Validador => _validador ?? (_validador = new Validador());
 
         private Configuracao Configuracoes
         {
@@ -80,12 +80,12 @@ namespace GSAutoTimeEntries.UI
 
         private void AtualizeLancamento(int indiceDaLinha, Lancamento lancamento)
         {
-            dataGridView1["colunaHoras", indiceDaLinha].Value = lancamento.Horas;
+            metroGrid1["hoursColumn", indiceDaLinha].Value = lancamento.Horas;
         }
 
         private void InsiraLancamentos(IList<Lancamento> listaDeLancamentos)
         {
-            dataGridView1.Rows.Clear();
+            metroGrid1.Rows.Clear();
 
             var atividade = cbAtividade.Text;
             var comentario = txtComentario.Text;
@@ -93,8 +93,8 @@ namespace GSAutoTimeEntries.UI
             var contagemDeBatidasMaxima = listaDeLancamentos.Select(x => x.Batidas.Count).Max();
             for (int i = 0; i < contagemDeBatidasMaxima; i++)
             {
-                var indexParaInsert = dataGridView1.Columns["colunaHoras"].Index;
-                var colunaBatidas = new DataGridViewColumn(dataGridView1.Columns["colunaHoras"].CellTemplate)
+                var indexParaInsert = metroGrid1.Columns["hoursColumn"].Index;
+                var colunaBatidas = new DataGridViewColumn(metroGrid1.Columns["hoursColumn"].CellTemplate)
                 {
                     Name = $"colunaBatida{indexParaInsert}",
                     HeaderText = indexParaInsert % 2 == 0
@@ -103,13 +103,13 @@ namespace GSAutoTimeEntries.UI
                     AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader
                 };
 
-                dataGridView1.Columns.Insert(indexParaInsert, colunaBatidas);
+                metroGrid1.Columns.Insert(indexParaInsert, colunaBatidas);
             }
 
             foreach (var lancamento in listaDeLancamentos)
             {
                 var linha = new DataGridViewRow();
-                linha.Cells.Add(new DataGridViewTextBoxCell {Value = lancamento.Data });
+                linha.Cells.Add(new DataGridViewTextBoxCell {Value = lancamento.Data.ConvertaParaDataPtBr() });
                 foreach (var batida in lancamento.Batidas)
                 {
                     var valor = batida.ToString();
@@ -125,10 +125,10 @@ namespace GSAutoTimeEntries.UI
                     }
                 }
 
-                var ignoreList = new[] { "Data", "Batidas", "_batidas", "ExatoOuNaoTrabalhado", "LinkAtividade", "TipoLancamento" };
+                var ignoreList = new[] { "Data", "Batidas", "_batidas", "ExatoOuNaoTrabalhado", "LinkAtividade", "TipoLancamento", "NaoCalcular", "Id", "Dispensado" };
                 var props = typeof(Lancamento).GetProperties().Where(x => !ignoreList.Contains(x.Name));
                 var cells = props.Select(x => new DataGridViewTextBoxCell { Value = x.GetValue(lancamento) }).ToList();
-                cells.Add(new DataGridViewTextBoxCell { Value = lancamento.ExatoOuNaoTrabalhado.ConvertaBooleano() });
+                //cells.Add(new DataGridViewTextBoxCell { Value = lancamento.ExatoOuNaoTrabalhado.ConvertaBooleano() });
 
                 if (cells.Count > 4)
                 {
@@ -137,7 +137,7 @@ namespace GSAutoTimeEntries.UI
 
                 linha.Cells.AddRange(cells.ToArray());
 
-                dataGridView1.Rows.Add(linha);
+                metroGrid1.Rows.Add(linha);
             }
 
             ExecuteFluxoParaHabilitarLancamento();
@@ -146,7 +146,7 @@ namespace GSAutoTimeEntries.UI
         private List<Lancamento> ObtenhaLancamentosNaTela()
         {
             var listaDeLancamentos = new List<Lancamento>();
-            for (var i = 0; i < dataGridView1.Rows.Count; i++)
+            for (var i = 0; i < metroGrid1.Rows.Count; i++)
             {
                 listaDeLancamentos.Add(ObtenhaLancamentoNaLinhaX(i));
             }
@@ -158,26 +158,26 @@ namespace GSAutoTimeEntries.UI
         {
             var lancamento = new Lancamento
             {
-                Data = dataGridView1["colunaData", indiceDaLinha].Value.ToString(),
-                Comentario = (dataGridView1["colunaComentario", indiceDaLinha].Value ?? string.Empty).ToString(),
-                LinkAtividade = txtLinkTarefa.Text,
-                TipoAtividade = (dataGridView1["colunaAtividade", indiceDaLinha].Value ?? string.Empty).ToString(),
-                Horas = Convert.ToDouble(dataGridView1["colunaHoras", indiceDaLinha].Value ?? 0),
-                ExatoOuNaoTrabalhado = dataGridView1["colunaExatoOuNaoTrabalhado", indiceDaLinha].Value != null
-                                     ? dataGridView1["colunaExatoOuNaoTrabalhado", indiceDaLinha].Value.ToString().ConvertaBooleano()
-                                     : false,
-                NaoCalcular = true
+                Data = metroGrid1["dateColumn", indiceDaLinha].Value.ToString().ParaDateTime(),
+                Comentario = (metroGrid1["comentarioColumn", indiceDaLinha].Value ?? string.Empty).ToString(),
+                LinkAtividade = (metroGrid1["linkAtividadeColumn", indiceDaLinha].Value ?? string.Empty).ToString(),
+                TipoAtividade = (metroGrid1["atividadeColumn", indiceDaLinha].Value ?? string.Empty).ToString(),
+                Horas = Convert.ToDouble(metroGrid1["hoursColumn", indiceDaLinha].Value ?? 0),
+                //NaoCalcular = true
             };
 
-            var indexDaColunaHoras = dataGridView1.Columns["colunaHoras"].Index;
+            var indexDaColunaHoras = metroGrid1.Columns["hoursColumn"].Index;
             if (indexDaColunaHoras != 0)
             {
                 lancamento.Batidas = new List<TimeSpan>();
                 for (int i = 1; i < indexDaColunaHoras; i++)
                 {
-                    var valor = dataGridView1[i, indiceDaLinha].Value.ToString();
+                    var valor = metroGrid1[i, indiceDaLinha].Value?.ToString();
                     if (valor != null && !string.IsNullOrEmpty(valor))
+                    {
                         lancamento.Batidas.Add(ObtenhaBatida(valor));
+                    }
+                        
                 }
             }
 
@@ -203,12 +203,12 @@ namespace GSAutoTimeEntries.UI
             var contagemLancamentos = listaLancamento.Count;
             for (int i = 0; i < contagemLancamentos; i++)
             {
-                dataGridView1.Rows[i].DefaultCellStyle.BackColor = listaLancamento[i].ExatoOuNaoTrabalhado ? Color.CornflowerBlue : Color.White;
+                metroGrid1.Rows[i].DefaultCellStyle.BackColor = listaLancamento[i].ExatoOuNaoTrabalhado ? Color.CornflowerBlue : Color.White;
             }
 
             foreach (var lancamento in listaLancamentoInvalido)
             {
-                var row = dataGridView1.Rows[lancamento];
+                var row = metroGrid1.Rows[lancamento];
 
                 row.DefaultCellStyle.BackColor = row.DefaultCellStyle.BackColor != Color.White ? row.DefaultCellStyle.BackColor : Color.LightCoral;
             }
@@ -276,9 +276,9 @@ namespace GSAutoTimeEntries.UI
             Invoke(
                 new MethodInvoker(() =>
                 {
-                    foreach (DataGridViewRow linha in dataGridView1.Rows)
+                    foreach (DataGridViewRow linha in metroGrid1.Rows)
                     {
-                        linha.Cells["colunaComentario"].Value = txtComentario.Text;
+                        linha.Cells["comentarioColumn"].Value = txtComentario.Text;
                     }
                 }));
         }
@@ -290,9 +290,9 @@ namespace GSAutoTimeEntries.UI
 
         private void cbAtividade_SelectedIndexChanged(object sender, EventArgs e)
         {
-            foreach (DataGridViewRow linha in dataGridView1.Rows)
+            foreach (DataGridViewRow linha in metroGrid1.Rows)
             {
-                linha.Cells["colunaAtividade"].Value = cbAtividade.Text;
+                linha.Cells["atividadeColumn"].Value = cbAtividade.Text;
             }
 
             ExecuteFluxoParaHabilitarLancamento();
@@ -347,38 +347,6 @@ namespace GSAutoTimeEntries.UI
 
         private void txtLinkTarefa_TextChanged(object sender, EventArgs e) => AssistenteDeDigitacaoLinkTarefa.TextChanged();
 
-        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex > -1)
-            {
-                using (var senderCell = dataGridView1[e.ColumnIndex, e.RowIndex])
-                {
-                    var valorCell = senderCell.Value != null 
-                                  ? senderCell.Value.ToString()
-                                  : string.Empty;
-                    if (senderCell.OwningColumn.Name.StartsWith("colunaBatida") && !string.IsNullOrEmpty(valorCell))
-                    {
-                        var regex = @"^(?:[01]\d|2[0123]):(?:[012345]\d)$";
-                        if (valorCell.Length > 6 || !Regex.IsMatch(valorCell, regex, RegexOptions.None))
-                        {
-                            MessageBox.Show(@"Formato inválido para a batida, o formato correto é no padrão hh:mm");
-                            senderCell.Value = string.Empty;
-
-                            return;
-                        }
-
-                        var lancamento = ObtenhaLancamentoNaLinhaX(senderCell.RowIndex);
-
-                        lancamento.Batidas[senderCell.ColumnIndex - 1] = ObtenhaBatida(senderCell.Value.ToString());
-                        lancamento.CalculeHoras();
-                        AtualizeLancamento(senderCell.RowIndex, lancamento);
-                    }
-                }
-            }
-
-            ExecuteFluxoParaHabilitarLancamento();
-        }
-
         private void frmLancamentoCorretivo_FormClosed(object sender, FormClosedEventArgs e)
         {
             Invoke((MethodInvoker)delegate
@@ -414,27 +382,12 @@ namespace GSAutoTimeEntries.UI
 
         private void txtComentarioSub_Click(object sender, EventArgs e) => txtComentario.Focus();
 
-        private void dataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            if (e.Button != MouseButtons.Right) return;
-
-            var oldSelectionMode = dataGridView1.SelectionMode;
-
-            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.CurrentCell = dataGridView1.Rows[e.RowIndex].Cells[0];
-
-            _lastClickedRowIndex = e.RowIndex;
-            contextMenuGrid.Show(MousePosition);
-
-            dataGridView1.SelectionMode = oldSelectionMode;
-        }
-
         private int? _lastClickedRowIndex { get; set; }
 
         private void itemExcluir_Click(object sender, EventArgs e)
         {
             if (_lastClickedRowIndex != null)
-                dataGridView1.Rows.RemoveAt(_lastClickedRowIndex.GetValueOrDefault());
+                metroGrid1.Rows.RemoveAt(_lastClickedRowIndex.GetValueOrDefault());
 
             _lastClickedRowIndex = null;
         }
@@ -454,10 +407,10 @@ namespace GSAutoTimeEntries.UI
                     dataInicio.DayOfWeek != DayOfWeek.Sunday)
                 {
                     var data = dataInicio.ToString("dd/MM/yyyy");
-                    if (!dataGridView1.Rows.OfType<DataGridViewRow>().ToList()
-                        .Any(x => x.Cells[0].Value.ToString().Equals(data)))
+                    if (!metroGrid1.Rows.OfType<DataGridViewRow>().ToList()
+                                   .Any(x => x.Cells[0].Value.ToString().Equals(data)))
                     {
-                        dataGridView1.Rows.Add(data);
+                        metroGrid1.Rows.Add(data);
                     }
                 }
 
@@ -477,22 +430,74 @@ namespace GSAutoTimeEntries.UI
             if (_lastClickedRowIndex != null)
             {
                 var index = _lastClickedRowIndex.GetValueOrDefault();
-                dataGridView1.Rows.Insert(
+                metroGrid1.Rows.Insert(
                     index + 1,
-                    dataGridView1[0, index].Value, dataGridView1[1, index].Value, dataGridView1[2, index].Value, dataGridView1[3, index].Value);
+                    metroGrid1[0, index].Value, metroGrid1[1, index].Value, metroGrid1[2, index].Value, metroGrid1[3, index].Value);
             }
 
             _lastClickedRowIndex = null;
         }
 
-        private void DataGridView1_KeyDown(object sender, KeyEventArgs e)
+        private void MetroGrid1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Right) return;
+
+            var oldSelectionMode = metroGrid1.SelectionMode;
+
+            metroGrid1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            metroGrid1.CurrentCell = metroGrid1.Rows[e.RowIndex].Cells[0];
+
+            _lastClickedRowIndex = e.RowIndex;
+            contextMenuGrid.Show(MousePosition);
+
+            metroGrid1.SelectionMode = oldSelectionMode;
+        }
+
+        private void MetroGrid1_KeyDown_1(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Delete)
             {
-                var selectedRows = dataGridView1.SelectedCells.OfType<DataGridViewCell>()
-                                                .Select(x => dataGridView1.Rows[x.RowIndex]);
-                selectedRows.ToList().ForEach(dataGridView1.Rows.Remove);
+                var selectedRows = metroGrid1.SelectedCells.OfType<DataGridViewCell>()
+                                             .Select(x => metroGrid1.Rows[x.RowIndex])
+                                             .Distinct()
+                                             .ToList();
+                selectedRows.ForEach(metroGrid1.Rows.Remove);
             }
+        }
+
+        private void MetroGrid1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex > -1)
+            {
+                using (var senderCell = metroGrid1[e.ColumnIndex, e.RowIndex])
+                {
+                    var valorCell = senderCell.Value != null
+                                  ? senderCell.Value.ToString()
+                                  : string.Empty;
+                    if (senderCell.OwningColumn.Name.StartsWith("colunaBatida") && !string.IsNullOrEmpty(valorCell))
+                    {
+                        var regex = @"^(?:[01]\d|2[0123]):(?:[012345]\d)$";
+                        if (valorCell.Length > 6 || !Regex.IsMatch(valorCell, regex, RegexOptions.None))
+                        {
+                            MessageBox.Show(@"Formato inválido para a batida, o formato correto é no padrão hh:mm");
+                            senderCell.Value = string.Empty;
+
+                            return;
+                        }
+
+                        var lancamento = ObtenhaLancamentoNaLinhaX(senderCell.RowIndex);
+
+                        if (lancamento.Batidas.Count >= senderCell.ColumnIndex)
+                        {
+                            lancamento.Batidas[senderCell.ColumnIndex - 1] = ObtenhaBatida(senderCell.Value?.ToString());
+                            lancamento.CalculeHoras();
+                            AtualizeLancamento(senderCell.RowIndex, lancamento);
+                        }
+                    }
+                }
+            }
+
+            ExecuteFluxoParaHabilitarLancamento();
         }
     }
 }

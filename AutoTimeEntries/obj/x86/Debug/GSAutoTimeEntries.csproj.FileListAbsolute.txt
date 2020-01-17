@@ -97,6 +97,8 @@ D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebA
 D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\AutoTimeEntries\bin\Debug\GSAutoTimeEntries.exe
 D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\AutoTimeEntries\bin\Debug\GSAutoTimeEntries.pdb
 D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\AutoTimeEntries\bin\Debug\EPPlus.dll
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\AutoTimeEntries\bin\Debug\ICSharpCode.SharpZipLib.dll
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\AutoTimeEntries\bin\Debug\LiteDB.dll
 D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\AutoTimeEntries\bin\Debug\MetroFramework.Design.dll
 D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\AutoTimeEntries\bin\Debug\MetroFramework.dll
 D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\AutoTimeEntries\bin\Debug\MetroFramework.Fonts.dll
@@ -105,6 +107,7 @@ D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebA
 D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\AutoTimeEntries\bin\Debug\Microsoft.Owin.Hosting.dll
 D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\AutoTimeEntries\bin\Debug\Newtonsoft.Json.dll
 D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\AutoTimeEntries\bin\Debug\Owin.dll
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\AutoTimeEntries\bin\Debug\SeleniumExtras.WaitHelpers.dll
 D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\AutoTimeEntries\bin\Debug\System.Net.Http.Formatting.dll
 D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\AutoTimeEntries\bin\Debug\System.Web.Cors.dll
 D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\AutoTimeEntries\bin\Debug\System.Web.Http.Cors.dll
@@ -115,6 +118,7 @@ D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebA
 D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\AutoTimeEntries\bin\Debug\WebDriver.Support.dll
 D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\AutoTimeEntries\bin\Debug\VisualEffects.pdb
 D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\AutoTimeEntries\bin\Debug\EPPlus.xml
+D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\AutoTimeEntries\bin\Debug\LiteDB.xml
 D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\AutoTimeEntries\bin\Debug\Microsoft.Owin.xml
 D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\AutoTimeEntries\bin\Debug\Microsoft.Owin.Host.HttpListener.xml
 D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\AutoTimeEntries\bin\Debug\Microsoft.Owin.Hosting.xml
@@ -139,7 +143,6 @@ D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebA
 D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\AutoTimeEntries\obj\x86\Debug\GSAutoTimeEntries.UI.UserControls.ucBorders.resources
 D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\AutoTimeEntries\obj\x86\Debug\GSAutoTimeEntries.UI.UserControls.ucConfiguracao.resources
 D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\AutoTimeEntries\obj\x86\Debug\GSAutoTimeEntries.csproj.GenerateResource.cache
-D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\AutoTimeEntries\obj\x86\Debug\GSAutoTimeEntries.csproj.CoreCompileInputs.cache
 D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\AutoTimeEntries\obj\x86\Debug\GSAutoTimeEntries.csproj.CopyComplete
 D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\AutoTimeEntries\obj\x86\Debug\GSAutoTimeEntries.exe
 D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\AutoTimeEntries\obj\x86\Debug\GSAutoTimeEntries.pdb

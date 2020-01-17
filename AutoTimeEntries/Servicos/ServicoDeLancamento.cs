@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GSAutoTimeEntries.Objetos;
 using IWshRuntimeLibrary;
 using GSAutoTimeEntriesWebApi.Objetos;
 using GSAutoTimeEntries.UI;
@@ -61,7 +63,7 @@ namespace GSAutoTimeEntries.Servicos
 
                 chromeDriver = new ChromeDriver(chromeDriverService, options, TimeSpan.FromSeconds(180));
 
-                
+
             }
             else
             {
@@ -80,7 +82,7 @@ namespace GSAutoTimeEntries.Servicos
 
         private Validador _validador { get; set; }
 
-        private Validador Validador { get { return _validador ?? (_validador = new Validador()); } }
+        private Validador Validador => _validador ?? (_validador = new Validador());
 
         public List<Lancamento> ObtenhaLancamentos(DateTime dataInicio, DateTime dataFim, bool exibirProgresso = true)
         {
@@ -102,7 +104,7 @@ namespace GSAutoTimeEntries.Servicos
 
         private string[] ObtenhaLancamentosInterno(DateTime dataInicio, DateTime dataFim, bool exibirProgresso = true)
         {
-            if(exibirProgresso)
+            if (exibirProgresso)
                 GerenciadorDeProgresso.AtualizeProgressBar(5, "Iniciando obtenção de lançamentos");
 
             return TenteObterLancamentos(dataInicio, dataFim, exibirProgresso);
@@ -125,6 +127,7 @@ namespace GSAutoTimeEntries.Servicos
                 var dtFim = dataFim.ConvertaParaDataPtBr();
 
                 relatorioDePonto = ObtenhaRelatorioDePonto(dtIni, dtFim, exibirProgresso);
+                File.WriteAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "arqs.json"), JsonConvert.SerializeObject(relatorioDePonto));
             }
             catch (Exception e)
             {
@@ -318,6 +321,15 @@ namespace GSAutoTimeEntries.Servicos
             return true;
         }
 
+        private string ObtenhaTextoMelhoriaPai(string url)
+        {
+            Driver.Navigate().GoToUrl(url);
+            Driver.EsperePaginaCarregar();
+
+            var elMelhoria = Driver.FindElementsByTagName("p").FirstOrDefault(x => x.Text.ToLowerInvariant().Contains("melhoria"));
+            return elMelhoria?.Text.Split('#').Last();
+        }
+
         public Dictionary<string, string> ObtenhaAtividadesAtribuidas()
         {
             RealizeLoginRedmine(Configuracao.ConfiguracaoRedmine, false);
@@ -325,21 +337,29 @@ namespace GSAutoTimeEntries.Servicos
             Driver.Navigate().GoToUrl(@"http://srv-redmine/redmine/my/page");
             Driver.EsperePaginaCarregar();
 
+            var elMyPageBox = Driver.FindElementByClassName("mypage-box");
+            var elHasNoData = elMyPageBox.FindElements(By.ClassName("nodata"));
+            if (elHasNoData.Count > 0)
+            {
+                return new Dictionary<string, string>();
+            }
+
             var elTable = Driver.FindElementByClassName("list");
             var elTasks = elTable.FindElements(By.ClassName("subject")).ToList();
 
             return elTasks.Select(x => x.FindElement(By.TagName("a")))
-                          .ToDictionary(y => y.Text, y => y.GetAttribute("href"));
+                                .ToDictionary(y => y.Text, y => y.GetAttribute("href"))
+                                .ToDictionary(z => ObtenhaTextoMelhoriaPai(z.Value) + $" - {z.Key}", z => z.Value);
+
         }
 
         private void SalveDataParaRetry(DateTime dataInicio, DateTime dataFim)
         {
-            var retry =
-                new DatasRetry()
-                {
-                    DataInicio = dataInicio,
-                    DataFim = dataFim
-                };
+            var retry = new DatasRetry
+            {
+                DataInicio = dataInicio,
+                DataFim = dataFim
+            };
 
             var jsonRetry = JsonConvert.SerializeObject(retry);
 
@@ -375,7 +395,7 @@ namespace GSAutoTimeEntries.Servicos
                 // Data
                 var elData = Driver.FindElementById("time_entry_spent_on");
                 elData.Clear();
-                elData.SendKeys(lancamento.Data.ConvertaDataRedmine());
+                elData.SendKeys(lancamento.Data.ObtenhaDataRedmine());
 
                 // Tempo gasto
                 Driver.FindElementById("time_entry_hours").SendKeys(lancamento.Horas.ToString(CultureInfo.InvariantCulture));
@@ -390,22 +410,29 @@ namespace GSAutoTimeEntries.Servicos
                 var criar = By.Name("commit");
                 Driver.FindElement(criar).Submit();
 
-                Persistencia.LancamentosRealizados.Add(new KeyValuePair<DateTime, Lancamento>(DateTime.Now, lancamento));
+                using (var db = Persistencia.AbraConexao())
+                {
+                    var lancamentosRealizados = db.GetCollection<Lancamento>("LancamentosRealizados");
+                    lancamentosRealizados.Insert(lancamento);
+                }
             }
 
             Driver.Quit();
         }
 
-        public void RealizeLancamento(string paginaDaTarefa, IList<Lancamento> listaDeLancamentos, bool exibirProgresso = true, bool jaLogado = false, bool dataJahTratada = false)
+        public void RealizeLancamento(string paginaDaTarefa, IList<Lancamento> listaDeLancamentos, bool exibirProgresso = true, bool jaLogado = false)
         {
+            Driver.Quit();
+            _chromeDriver = null;
+
             if (!jaLogado)
             {
                 RealizeLoginRedmine(Configuracao.ConfiguracaoRedmine);
             }
 
             Driver.EsperePaginaCarregar();
-            
-            if(exibirProgresso)
+
+            if (exibirProgresso)
             {
                 GerenciadorDeProgresso.AtualizeProgressBar(35, $"{Configuracao.ConfiguracaoRedmine.Usuario} - Calculando lançamentos");
                 GerenciadorDeProgresso.AtualizeProgressBar(50, $"{Configuracao.ConfiguracaoRedmine.Usuario} - {listaDeLancamentos.Count} lançamentos para realizar");
@@ -415,7 +442,7 @@ namespace GSAutoTimeEntries.Servicos
             int i = 1;
             foreach (var lancamento in listaDeLancamentos)
             {
-                if(exibirProgresso)
+                if (exibirProgresso)
                     GerenciadorDeProgresso.AtualizeProgressBar(
                         GerenciadorDeProgresso.Progresso + progressPorLancamento,
                         $"Realizando lançamento {i}/{listaDeLancamentos.Count}");
@@ -428,9 +455,8 @@ namespace GSAutoTimeEntries.Servicos
                 // Data
                 var elData = Driver.FindElementById("time_entry_spent_on");
                 elData.Clear();
-                var novaData = dataJahTratada 
-                             ? lancamento.Data 
-                             : lancamento.Data.ConvertaDataRedmine();
+
+                var novaData = lancamento.Data.ObtenhaDataRedmine();
 
                 elData.SendKeys(novaData);
 
@@ -447,7 +473,11 @@ namespace GSAutoTimeEntries.Servicos
                 var criar = By.Name("commit");
                 Driver.FindElement(criar).Submit();
 
-                Persistencia.LancamentosRealizados.Add(new KeyValuePair<DateTime, Lancamento>(DateTime.Now, lancamento));
+                using (var db = Persistencia.AbraConexao())
+                {
+                    var lancamentosRealizados = db.GetCollection<Lancamento>("LancamentosRealizados");
+                    lancamentosRealizados.Insert(lancamento);
+                }
             }
 
             //Driver.Quit();
@@ -466,7 +496,7 @@ namespace GSAutoTimeEntries.Servicos
             var caminhoArquivo = AppDomain.CurrentDomain.BaseDirectory + "RelatorioCartaoDePontoLayout1.csv";
 
             // Deleta o arquivo se ele já existir, pra evitar erros
-            if(File.Exists(caminhoArquivo)) File.Delete(caminhoArquivo);
+            if (File.Exists(caminhoArquivo)) File.Delete(caminhoArquivo);
 
             if (exibirProgresso)
                 GerenciadorDeProgresso.AtualizeProgressBar(50, "Acessando emissão de relatório");
@@ -478,6 +508,9 @@ namespace GSAutoTimeEntries.Servicos
             Driver.EspereTempoEspecifico(5);
 
             var byComboPesquisa = By.Id("comboGridFiltroColaboradoresIndividualAux");
+
+            Driver.EspereElementoSerExibidoESerClicavel(byComboPesquisa);
+
             var elComboPesquisa = Driver.FindElement(byComboPesquisa);
 
             Driver.EspereTempoEspecifico(2);
@@ -556,6 +589,7 @@ namespace GSAutoTimeEntries.Servicos
             // Guardando esse código pra posterioridade
             //Driver.ExecuteScript("arguments[0].style='display: block;'", element);
 
+
             var acao = new Actions(Driver);
             acao.MoveToElement(elBtnDownload)
                 .Build()
@@ -566,7 +600,7 @@ namespace GSAutoTimeEntries.Servicos
             Driver.EsperePaginaCarregar();
             Driver.EspereTempoEspecifico(2);
 
-            if(Configuracao.OcultarNavegador) Driver.HabiliteDownloadDeArquivosHeadlessNaPaginaAtual();
+            if (Configuracao.OcultarNavegador) Driver.HabiliteDownloadDeArquivosHeadlessNaPaginaAtual();
 
             var options = Driver.FindElementsByClassName("k-link");
             var item = options.FirstOrDefault(x => x.GetAttribute("textContent").Contains("CSV"));
@@ -588,13 +622,14 @@ namespace GSAutoTimeEntries.Servicos
 
         public void RealizeLoginRedmine(ConfiguracaoRedmine configuracao, bool exibirProgresso = true)
         {
-            if(exibirProgresso)
+            if (exibirProgresso)
                 GerenciadorDeProgresso.AtualizeProgressBar(20, $"{configuracao.Usuario} - Iniciando automatização");
             Driver.Navigate().GoToUrl(configuracao.LinkLogin);
 
             if (exibirProgresso)
                 GerenciadorDeProgresso.AtualizeProgressBar(30, $"{configuracao.Usuario} - Realizando login no Redmine");
             Driver.EsperePaginaCarregar();
+            Driver.EspereTempoEspecifico(2);
 
             Driver.FindElementById("username").SendKeys(configuracao.Usuario);
             Driver.FindElementById("password").SendKeys(configuracao.Senha);
@@ -608,7 +643,7 @@ namespace GSAutoTimeEntries.Servicos
 
         private void RealizeLoginAutoatendimentoLG(ConfiguracaoAutotendimento configuracao, bool exibirProgresso = true)
         {
-            if(exibirProgresso)
+            if (exibirProgresso)
                 GerenciadorDeProgresso.AtualizeProgressBar(15, "Iniciando automatização");
             Driver.Navigate().GoToUrl(configuracao.LinkLogin);
 
