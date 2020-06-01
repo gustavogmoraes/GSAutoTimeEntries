@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using IWshRuntimeLibrary;
-using GSAutoTimeEntriesWebApi.Objetos;
-using GSAutoTimeEntries.Servicos;
+﻿using GSAutoTimeEntries.Servicos;
 using GSAutoTimeEntries.UI;
 using GSAutoTimeEntries.Utils;
+using GSAutoTimeEntriesWebApi.Objetos;
 using Microsoft.Win32;
 using Newtonsoft.Json;
+using System;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
-using Microsoft.Owin.Hosting;
-using System.Net.Http;
+using System.Windows.Forms;
+using GSAutoTimeEntries.Objetos;
 
 namespace GSAutoTimeEntries
 {
@@ -38,6 +34,9 @@ namespace GSAutoTimeEntries
         [STAThread]
         public static void Main(params string[] arguments)
         {
+            Sessao.Id = Guid.NewGuid();
+            Sessao.StartingTime = DateTime.Now;
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
@@ -67,7 +66,7 @@ namespace GSAutoTimeEntries
                             return;
                         }
 
-                        using (var servicoDeLancamento = new ServicoDeLancamento(configuracao))
+                        using (var servicoDeLancamento = new ServicoDeLancamento(configuracao, Sessao.Id))
                         {
                             var jsonRetry = System.IO.File.ReadAllText(CaminhoRetryFile);
                             var retry = JsonConvert.DeserializeObject<DatasRetry>(jsonRetry);
@@ -77,15 +76,6 @@ namespace GSAutoTimeEntries
                     }
                     break;
             }
-
-
-            var baseAddress = @"http://PC-1902:80/";
-
-            // Start OWIN host 
-            //using (WebApp.Start<Startup>(url: baseAddress))
-            //{
-                
-            //}
         }
 
         private static void InicieMonitoramentoDeEventosDeTrocaDeSessao()

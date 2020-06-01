@@ -354,3 +354,5 @@ MigrationBackup/
 
 AutoTimeEntries/bin/Debug/atvsSalva.json
 AutoTimeEntries/bin/Debug/@Dados.db
+
+Output/

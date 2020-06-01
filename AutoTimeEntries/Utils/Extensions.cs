@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
@@ -173,18 +175,6 @@ namespace GSAutoTimeEntries.Utils
         public static bool EhFimDeSemana(this DateTime dateTime)
         {
             return dateTime.DayOfWeek == DayOfWeek.Saturday || dateTime.DayOfWeek == DayOfWeek.Sunday;
-        }
-
-        public static void HabiliteDownloadDeArquivosHeadlessNaPaginaAtual(this ChromeDriver chromeDriver)
-        {
-            // Habilita o chrome para permitir downloads em background
-            var parametros = new Dictionary<string, object>
-            {
-                { "behavior", "allow" },
-                { "downloadPath", AppDomain.CurrentDomain.BaseDirectory }
-            };
-
-            chromeDriver.ExecuteChromeCommand("Page.setDownloadBehavior", parametros);
         }
 
         #region Animação
@@ -395,11 +385,21 @@ namespace GSAutoTimeEntries.Utils
             return new TimeSpan(hora, minuto, 0);
         }
 
-        public static DateTime ParaDateTime(this string time)
+        public static DateTime ParaDateTime(this string time, bool dayFirst = true)
         {
+            if (dayFirst)
+            {
+                var splitted1 = time.Split('/');
+                var dia1 = Convert.ToInt32(splitted1[0]);
+                var mes1 = Convert.ToInt32(splitted1[1]);
+                var ano1 = Convert.ToInt32(splitted1[2].Length == 2 ? "20" + splitted1[2] : splitted1[2]);
+
+                return new DateTime(ano1, mes1, dia1);
+            }
+
             var splitted = time.Split('/');
-            var dia = Convert.ToInt32(splitted[0]);
-            var mes = Convert.ToInt32(splitted[1]);
+            var mes = Convert.ToInt32(splitted[0]);
+            var dia = Convert.ToInt32(splitted[1]);
             var ano = Convert.ToInt32(splitted[2].Length == 2 ? "20" + splitted[2] : splitted[2]);
 
             return new DateTime(ano, mes, dia);

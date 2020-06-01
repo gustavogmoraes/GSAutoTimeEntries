@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GSAutoTimeEntries.Objetos;
 
 namespace GSAutoTimeEntries.UI
 {
@@ -83,6 +84,15 @@ namespace GSAutoTimeEntries.UI
             metroGrid1["hoursColumn", indiceDaLinha].Value = lancamento.Horas;
         }
 
+        private static int TrateIndexInsert(int index)
+        {
+            switch (index)
+            {
+                default:
+                    return index;
+            }
+        }
+
         private void InsiraLancamentos(IList<Lancamento> listaDeLancamentos)
         {
             metroGrid1.Rows.Clear();
@@ -98,21 +108,23 @@ namespace GSAutoTimeEntries.UI
                 {
                     Name = $"colunaBatida{indexParaInsert}",
                     HeaderText = indexParaInsert % 2 == 0
-                               ? $"Saída {indexParaInsert}"
-                               : $"Entrada {indexParaInsert}",
+                               ? $"Saída { TrateIndexInsert(indexParaInsert) }"
+                               : $"Entrada { TrateIndexInsert(indexParaInsert) }",
                     AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader
                 };
 
                 metroGrid1.Columns.Insert(indexParaInsert, colunaBatidas);
             }
 
-            foreach (var lancamento in listaDeLancamentos)
+            foreach (var lancamento in listaDeLancamentos.Where(x => x.Batidas.Any()))
             {
                 var linha = new DataGridViewRow();
-                linha.Cells.Add(new DataGridViewTextBoxCell {Value = lancamento.Data.ConvertaParaDataPtBr() });
-                foreach (var batida in lancamento.Batidas)
+
+                linha.Cells.Add(new DataGridViewTextBoxCell { Value = lancamento.DiaDaSemana });
+
+                linha.Cells.Add(new DataGridViewTextBoxCell { Value = lancamento.Data.ConvertaParaDataPtBr() });
+                foreach (var valor in lancamento.Batidas.Select(batida => batida.ToString()))
                 {
-                    var valor = batida.ToString();
                     linha.Cells.Add(new DataGridViewTextBoxCell { Value = valor.Remove(valor.Length - 3, 3) });
                 }
 
@@ -125,10 +137,9 @@ namespace GSAutoTimeEntries.UI
                     }
                 }
 
-                var ignoreList = new[] { "Data", "Batidas", "_batidas", "ExatoOuNaoTrabalhado", "LinkAtividade", "TipoLancamento", "NaoCalcular", "Id", "Dispensado" };
+                var ignoreList = new[] { "DiaDaSemana", "Data", "Batidas", "_batidas", "ExatoOuNaoTrabalhado", "LinkAtividade", "TipoLancamento", "NaoCalcular", "Id", "Dispensado" };
                 var props = typeof(Lancamento).GetProperties().Where(x => !ignoreList.Contains(x.Name));
                 var cells = props.Select(x => new DataGridViewTextBoxCell { Value = x.GetValue(lancamento) }).ToList();
-                //cells.Add(new DataGridViewTextBoxCell { Value = lancamento.ExatoOuNaoTrabalhado.ConvertaBooleano() });
 
                 if (cells.Count > 4)
                 {
@@ -158,6 +169,7 @@ namespace GSAutoTimeEntries.UI
         {
             var lancamento = new Lancamento
             {
+                DiaDaSemana = metroGrid1["dayColumn", indiceDaLinha].Value.ToString(),
                 Data = metroGrid1["dateColumn", indiceDaLinha].Value.ToString().ParaDateTime(),
                 Comentario = (metroGrid1["comentarioColumn", indiceDaLinha].Value ?? string.Empty).ToString(),
                 LinkAtividade = (metroGrid1["linkAtividadeColumn", indiceDaLinha].Value ?? string.Empty).ToString(),
@@ -170,7 +182,7 @@ namespace GSAutoTimeEntries.UI
             if (indexDaColunaHoras != 0)
             {
                 lancamento.Batidas = new List<TimeSpan>();
-                for (int i = 1; i < indexDaColunaHoras; i++)
+                for (int i = 2 /*Indice original da coluna horas*/; i < indexDaColunaHoras; i++)
                 {
                     var valor = metroGrid1[i, indiceDaLinha].Value?.ToString();
                     if (valor != null && !string.IsNullOrEmpty(valor))
@@ -194,7 +206,6 @@ namespace GSAutoTimeEntries.UI
 
         private void ExecuteFluxoParaHabilitarLancamento()
         {
-            var linkTarefa = Validador.ValideSeLinkDeTarefaEhValido(txtLinkTarefa.Text);
             var atividade = Validador.ValideSeAtividadeEhValida(cbAtividade.Text);
 
             var listaLancamento = ObtenhaLancamentosNaTela();
@@ -215,7 +226,7 @@ namespace GSAutoTimeEntries.UI
 
             var lancamentos = listaLancamentoInvalido.Count == 0;
 
-            if (linkTarefa && atividade && lancamentos)
+            if (atividade && lancamentos)
             {
                 btnLancamento.Enabled = true;
             }
@@ -234,7 +245,7 @@ namespace GSAutoTimeEntries.UI
             GerenciadorDeProgresso.Crie();
             Task.Run(() =>
             {
-                using (var servicoDeLancamento = new ServicoDeLancamento(Configuracoes))
+                using (var servicoDeLancamento = new ServicoDeLancamento(Configuracoes, Sessao.Id))
                 {
                     var dataInicio = dtpDataInicio.Value;
                     var dataFim = dtpDataFim.Value;
@@ -309,7 +320,7 @@ namespace GSAutoTimeEntries.UI
             GerenciadorDeProgresso.Crie();
             Task.Run(() =>
             {
-                using (var servicoDeLancamento = new ServicoDeLancamento(Configuracoes))
+                using (var servicoDeLancamento = new ServicoDeLancamento(Configuracoes, Sessao.Id))
                 {
                     GerenciadorDeProgresso.AtualizeProgressBar(10, "Iniciando lançamento");
                     servicoDeLancamento.RealizeLancamento(txtLinkTarefa.Text.Trim(), listaDeLancamentos);
@@ -455,13 +466,40 @@ namespace GSAutoTimeEntries.UI
 
         private void MetroGrid1_KeyDown_1(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Delete)
+            switch (e.KeyCode)
             {
-                var selectedRows = metroGrid1.SelectedCells.OfType<DataGridViewCell>()
-                                             .Select(x => metroGrid1.Rows[x.RowIndex])
-                                             .Distinct()
-                                             .ToList();
-                selectedRows.ForEach(metroGrid1.Rows.Remove);
+                case Keys.Delete:
+                    var selectedCells = metroGrid1.SelectedCells.OfType<DataGridViewCell>(); 
+
+                    if (metroGrid1.SelectedColumns.Count > 1)
+                    {
+                        var selectedRows = selectedCells
+                            .Select(x => metroGrid1.Rows[x.RowIndex])
+                            .Distinct()
+                            .ToList();
+                        selectedRows.ForEach(metroGrid1.Rows.Remove);
+
+                        break;
+                    }
+
+                    selectedCells.ToList().ForEach(x => x.Value = null);
+
+                    break;
+
+                case Keys.V:
+                    if (e.Control && Clipboard.ContainsText())
+                    {
+                        var clipBoardText = Clipboard.GetText();
+
+                        metroGrid1.SelectedCells.OfType<DataGridViewCell>()
+                            .ToList()
+                            .ForEach(x =>
+                            {
+                                x.Value = clipBoardText;
+                            });
+                    }
+
+                    break;
             }
         }
 

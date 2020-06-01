@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GSAutoTimeEntries.Objetos;
 using GSAutoTimeEntries.Properties;
 using GSAutoTimeEntries.Servicos;
 using GSAutoTimeEntries.Utils;
@@ -110,7 +111,7 @@ namespace GSAutoTimeEntries.UI
             ((MethodInvoker) delegate
             {
                 using (var servicoDeConfig = new ServicoDeConfiguracao())
-                using (var servicoDeLancamento = new ServicoDeLancamento(servicoDeConfig.ObtenhaConfiguracao()))
+                using (var servicoDeLancamento = new ServicoDeLancamento(servicoDeConfig.ObtenhaConfiguracao(), Sessao.Id))
                 {
                     GerenciadorDeProgresso.Crie();
                     GerenciadorDeProgresso.AtualizeProgressBar(10, "Iniciando!");

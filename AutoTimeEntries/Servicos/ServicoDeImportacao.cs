@@ -1,115 +1,148 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
 using IWshRuntimeLibrary;
 using GSAutoTimeEntriesWebApi.Objetos;
 using GSAutoTimeEntries.UI;
 using GSAutoTimeEntries.Utils;
+using OfficeOpenXml;
+using OfficeOpenXml.FormulaParsing;
 
 namespace GSAutoTimeEntries.Servicos
 {
     public class ServicoDeImportacao : IDisposable
     {
-        public List<Ponto> ImporteRegistroDePonto(string[] linhas)
+        public List<Ponto> ImporteRegistroDePonto(string caminhoArquivoXlsx)
         {
-            var listaDeLinhas = linhas.ToList();
-            // Removendo a primeira linha, pois são somente colunas
-            listaDeLinhas.RemoveAt(0);
+            const string colunaDiaDaSemana = "Dia";
+            const string colunaData = "Data";
+            const string colunaMarcacoes = "MarcacoesStr";
 
-            var DIA_DA_SEMANA = 53;
-            var DATA = 57;
-            var BATIDAS = 58;
+            var dataTable = GetDataTableFromExcel(caminhoArquivoXlsx);
 
-            var listaDePonto = new List<Ponto>();
-            for (int i = 0; i < listaDeLinhas.Count; i++)
+            return dataTable?.Rows.OfType<DataRow>()
+                .Where(row => !string.IsNullOrEmpty(row[colunaDiaDaSemana].ToString()))
+                .Select(row => new Ponto
+                {
+                    DiaDaSemana = row[colunaDiaDaSemana].ToString(),
+                    Data = row[colunaData].ToString(),
+                    Marcacoes = ObtenhaMarcacoes(row[colunaMarcacoes].ToString())
+                })
+                .ToList();
+        }
+
+        public static DataTable GetDataTableFromExcel(string path, bool hasHeader = true)
+        {
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            using (var pck = new ExcelPackage())
             {
-                if (!listaDeLinhas[i].Contains("BANCO DE HORAS")) continue;
-
-                var splitted = listaDeLinhas[i].Split(',');
-
-                if (splitted.Length >= 64)
+                using (var stream = System.IO.File.OpenRead(path))
                 {
-                    DIA_DA_SEMANA = 60;
-                    DATA = 64;
-                    BATIDAS = 65;
+                    pck.Load(stream);
                 }
 
-                var diaDaSemana = splitted[DIA_DA_SEMANA];
-                var data = splitted[DATA];
+                var ws = pck.Workbook.Worksheets.First();
 
-                //if (string.IsNullOrEmpty(diaDaSemana))
-                //    continue;
-
-                string batidas;
-                if (i == listaDeLinhas.Count - 1)
-                    batidas = splitted[BATIDAS];
-                else
+                var tbl = new DataTable();
+                foreach (var firstRowCell in ws.Cells[1, 1, 1, ws.Dimension.End.Column])
                 {
-                    batidas = !string.IsNullOrEmpty(diaDaSemana)
-                        ? splitted[BATIDAS]
-                        : listaDeLinhas[i + 1].Split(',')[BATIDAS];
+                    tbl.Columns.Add(hasHeader ? firstRowCell.Text : $"Column {firstRowCell.Start.Column}");
                 }
 
-                // Pulamos uma linha, no caso de o relatório de 1 dia ocupar 2 linhas
-                //if (string.IsNullOrEmpty(batidas) && string.IsNullOrEmpty(diaDaSemana)) i++;
+                var startRow = hasHeader ? 2 : 1;
+                for (int rowNum = startRow; rowNum <= ws.Dimension.End.Row; rowNum++)
+                {
+                    var wsRow = ws.Cells[rowNum, 1, rowNum, ws.Dimension.End.Column];
+                    var row = tbl.Rows.Add();
 
-                var correcao = string.Empty;
-                if (!string.IsNullOrEmpty(batidas))
-                    listaDePonto.Add(new Ponto
+                    foreach (var cell in wsRow)
                     {
-                        Data = data,
-                        HorariosDasBatidas = batidas.Trim()
-                            .Split(new[] { "  " }, StringSplitOptions.None)
-                            .Select(x =>
-                            {
-                                if (x.Length <= 5) return ObtenhaBatida(x);
-
-                                if (x.Last() == ':')
-                                    return ObtenhaBatida(x.Remove(x.Length - 1, 1));
-
-                                var valores = x.Split(' ');
-                                correcao = valores[1];
-                                return ObtenhaBatida(valores[0].Remove(5, 1));
-                            })
-                            .ToList()
-                    });
-
-                if (!string.IsNullOrEmpty(correcao))
-                {
-                    listaDePonto.Last().HorariosDasBatidas.Add(ObtenhaBatida(correcao));
-                    correcao = string.Empty;
+                        row[cell.Start.Column - 1] = cell.Text;
+                    }
                 }
+
+                return tbl;
+            }
+        }
+
+        private List<TimeSpan> ObtenhaMarcacoes(string dados)
+        {
+            if (string.IsNullOrEmpty(dados))
+            {
+                return null;
             }
 
-            // Remove os dias sem data, corrigindo duplicatas
-            listaDePonto.RemoveAll(x => string.IsNullOrEmpty(x.Data));
+            return dados.Trim()
+            .Split(new[] {" "}, StringSplitOptions.None)
+            .Select(x =>
+            {
+                if (x.Length <= 5) return ObtenhaBatida(x);
+                if (x.Last() == ':') return ObtenhaBatida(x.Remove(x.Length - 1, 1));
 
-            return listaDePonto;
+                var valores = x.Split(' ');
+                return ObtenhaBatida(valores[0].Remove(5, 1));
+            })
+            .ToList();
         }
 
         private TimeSpan ObtenhaBatida(string batida)
         {
-            var splitted = batida.Split(':');
+            if (string.IsNullOrEmpty(batida))
+            {
+                return TimeSpan.Zero;
+            }
 
+            var splitted = batida.Split(':');
             return new TimeSpan(Convert.ToInt32(splitted[0]), Convert.ToInt32(splitted[1]), 0);
         }
 
-        public List<Lancamento> ObtenhaLancamentosPorImportacao(string[] linhas, DateTime dataInicio, DateTime dataFim, bool exibirProgresso)
+        public List<Lancamento> ObtenhaLancamentosPorImportacao(string caminhoArquivoDePonto, DateTime dataInicio, DateTime dataFim, bool exibirProgresso)
         {
             if (exibirProgresso)
+            {
                 GerenciadorDeProgresso.AtualizeProgressBar(80, "Processando registros");
+            }
+
             Thread.Sleep(1000);
 
             var listaDeLancamentos = new List<Lancamento>();
-            var listaDePontos = ImporteRegistroDePonto(linhas);
+            var listaDePontos = ImporteRegistroDePonto(caminhoArquivoDePonto);
 
             return listaDePontos.Select(x => new Lancamento
             {
-                Data = x.Data.ParaDateTime(),
-                Batidas = x.HorariosDasBatidas.OrderBy(y => y).ToList()
+                DiaDaSemana = x.DiaDaSemana,
+                Data = x.Data.ParaDateTime(false),
+                Batidas = x.Marcacoes == null 
+                        ? new List<TimeSpan>() 
+                        : x.Marcacoes.OrderBy(y => y).ToList()
             }).ToList();
+        }
+
+        public static DataTable ConvertCSVtoDataTable(string strFilePath)
+        {
+            StreamReader sr = new StreamReader(strFilePath);
+            string[] headers = sr.ReadLine().Split(',');
+            DataTable dt = new DataTable();
+            foreach (string header in headers)
+            {
+                dt.Columns.Add(header);
+            }
+            while (!sr.EndOfStream)
+            {
+                string[] rows = Regex.Split(sr.ReadLine(), ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
+                DataRow dr = dt.NewRow();
+                for (int i = 0; i < headers.Length; i++)
+                {
+                    dr[i] = rows[i];
+                }
+                dt.Rows.Add(dr);
+            }
+            return dt;
         }
 
         private string ObtenhaDataDoLancamento(string dataImportada)

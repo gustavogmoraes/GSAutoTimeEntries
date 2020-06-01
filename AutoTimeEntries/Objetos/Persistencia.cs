@@ -53,7 +53,7 @@ namespace GSAutoTimeEntries.Objetos
             }
         }
 
-        public static LiteCollection<Lancamento> ObtenhaCollectionLancamentosRealizados(this LiteDatabase dbConnection)
+        public static ILiteCollection<Lancamento> ObtenhaCollectionLancamentosRealizados(this LiteDatabase dbConnection)
         {
             return dbConnection.GetCollection<Lancamento>(NomeCollectionLancamentosRealizados);
         }

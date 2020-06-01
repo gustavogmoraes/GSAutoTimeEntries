@@ -105,7 +105,7 @@ namespace GSAutoTimeEntries.Servicos
             if (configGeral == null) return;
 
             LancamentoEstahSendoExecutado = true;
-            using (var servicoDeLancamento = new ServicoDeLancamento(configGeral))
+            using (var servicoDeLancamento = new ServicoDeLancamento(configGeral, Sessao.Id))
             using (var db = Persistencia.AbraConexao())
             {
                 var lancamentosRealizados = db.ObtenhaCollectionLancamentosRealizados();
@@ -155,7 +155,7 @@ namespace GSAutoTimeEntries.Servicos
         {
             GerenciadorDeProgresso.Crie();
 
-            using (var servicoDeLancamento = new ServicoDeLancamento(new ServicoDeConfiguracao().ObtenhaConfiguracao()))
+            using (var servicoDeLancamento = new ServicoDeLancamento(new ServicoDeConfiguracao().ObtenhaConfiguracao(), Sessao.Id))
             {
                 servicoDeLancamento.RealizeLancamentoMultiplo(lancamentos);
             }

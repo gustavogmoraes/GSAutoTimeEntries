@@ -1,23 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+using System.Net.Http;
+using System.Net.NetworkInformation;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using AutomationBase;
 using GSAutoTimeEntries.Objetos;
-using IWshRuntimeLibrary;
 using GSAutoTimeEntriesWebApi.Objetos;
 using GSAutoTimeEntries.UI;
 using GSAutoTimeEntries.Utils;
 using Newtonsoft.Json;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Interactions;
-using OpenQA.Selenium.Support.PageObjects;
 using File = System.IO.File;
 using Keys = OpenQA.Selenium.Keys;
 
@@ -25,114 +24,103 @@ namespace GSAutoTimeEntries.Servicos
 {
     public class ServicoDeLancamento : IDisposable
     {
-        private Configuracao _configuracao { get; set; }
+        private Configuracao _configuracao;
         private Configuracao Configuracao => _configuracao ?? (_configuracao = new ServicoDeConfiguracao().ObtenhaConfiguracao());
 
-        private ChromeDriver _chromeDriver { get; set; }
+        private ChromeDriver _chromeDriver;
         private ChromeDriver Driver => _chromeDriver ?? (_chromeDriver = CrieChromeDriver());
+
+        private static string DefaultDownloadPath => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ExecutionFiles");
+
+        private static string DownloadPath { get; set; }
 
         private ChromeDriver CrieChromeDriver()
         {
-            // Definindo uma pasta padrão para downloads
-            var downloadFilepath = AppDomain.CurrentDomain.BaseDirectory;
+            ChromeDriverHelper.CheckUpdateChromeDriver();
 
-            var options = new ChromeOptions();
-            options.AddArguments("allow-running-insecure-content", "ignore-certificate-errors");
-
-            // Settando a download location
-            options.AddUserProfilePreference("download.default_directory", downloadFilepath);
-            options.AddUserProfilePreference("download.prompt_for_download", false);
-            options.AddUserProfilePreference("intl.accept_languages", "nl");
-            options.AddUserProfilePreference("disable-popup-blocking", "true");
+            var driverBuilder = ChromeDriverHelper
+                .GetDriverBuilder()
+                .AllowRunningInsecureContent()
+                .DisablePopupBlocking()
+                .SetDownloadPath(DownloadPath);
 
             if (Configuracao.OcultarNavegador)
             {
-                // "--silent-launch", "--no-startup-window", "no-sandbox", "disable-gpu" "start-maximized"
-                options.AddArguments("headless", "disable-gpu", "no-sandbox", "disable-extensions"); // Headless
-                options.AddArguments("--proxy-server='direct://'", "--proxy-bypass-list=*"); // Velocidade
-
-            }
-            else options.AddArgument("start-maximized");
-
-            ChromeDriver chromeDriver = null;
-            if (Configuracao.OcultarNavegador)
-            {
-                // Adaptando para inicio headless
-                var chromeDriverService = ChromeDriverService.CreateDefaultService(AppDomain.CurrentDomain.BaseDirectory);
-                chromeDriverService.HideCommandPromptWindow = true; // Esconder o console
-
-                chromeDriver = new ChromeDriver(chromeDriverService, options, TimeSpan.FromSeconds(180));
-
-
-            }
-            else
-            {
-                // Brennos
-                chromeDriver = new ChromeDriver(AppDomain.CurrentDomain.BaseDirectory, options);
-                chromeDriver.Manage().Window.Maximize();
+                driverBuilder.Headless();
             }
 
-            return chromeDriver;
+            return driverBuilder.Build();
         }
 
-        public ServicoDeLancamento(Configuracao configuracao)
+        public ServicoDeLancamento(Configuracao configuracao, Guid sessionId)
         {
-            this._configuracao = configuracao;
+            _configuracao = configuracao;
+
+            if (!Directory.Exists(DefaultDownloadPath))
+            {
+                Directory.CreateDirectory(DefaultDownloadPath);
+            }
+
+            DownloadPath = Path.Combine(DefaultDownloadPath, sessionId.ToString());
+            Directory.CreateDirectory(DownloadPath);
+
         }
 
-        private Validador _validador { get; set; }
+        private Validador _validador;
 
         private Validador Validador => _validador ?? (_validador = new Validador());
 
         public List<Lancamento> ObtenhaLancamentos(DateTime dataInicio, DateTime dataFim, bool exibirProgresso = true)
         {
-            var linhas = ObtenhaLancamentosInterno(dataInicio, dataFim, exibirProgresso);
-            if (linhas != null)
+            var caminhoArquivoDePonto = ObtenhaLancamentosInterno(dataInicio, dataFim, exibirProgresso);
+            if (caminhoArquivoDePonto == null)
             {
-                using (var servicoDeImportacao = new ServicoDeImportacao())
-                {
-                    var valido = Validador.ValideSeArquivoEhRegistroDePonto(linhas, exibirProgresso);
-                    if (valido)
-                    {
-                        return servicoDeImportacao.ObtenhaLancamentosPorImportacao(linhas, dataInicio, dataFim, exibirProgresso);
-                    }
-                }
+                return null;
             }
 
-            return null;
+            using (var servicoDeImportacao = new ServicoDeImportacao())
+            {
+                return servicoDeImportacao.ObtenhaLancamentosPorImportacao(caminhoArquivoDePonto, dataInicio, dataFim, exibirProgresso);
+                //var valido = true; Validador.ValideSeArquivoEhRegistroDePonto(caminhoArquivoDePonto, exibirProgresso);
+            }
         }
 
-        private string[] ObtenhaLancamentosInterno(DateTime dataInicio, DateTime dataFim, bool exibirProgresso = true)
+        private string ObtenhaLancamentosInterno(DateTime dataInicio, DateTime dataFim, bool exibirProgresso = true)
         {
             if (exibirProgresso)
+            {
                 GerenciadorDeProgresso.AtualizeProgressBar(5, "Iniciando obtenção de lançamentos");
+            }
 
             return TenteObterLancamentos(dataInicio, dataFim, exibirProgresso);
         }
 
-        private string[] TenteObterLancamentos(DateTime dataInicio, DateTime dataFim, bool exibirProgresso = true)
+        private string TenteObterLancamentos(DateTime dataInicio, DateTime dataFim, bool exibirProgresso = true)
         {
-            string[] relatorioDePonto = null;
             try
             {
                 RealizeLoginAutoatendimentoLG(Configuracao.ConfiguracaoAutotendimento, exibirProgresso);
                 Driver.EsperePaginaCarregar();
 
                 if (exibirProgresso)
+                {
                     GerenciadorDeProgresso.AtualizeProgressBar(40, "Acessando Autoatendimento");
+                }
 
                 Driver.EsperePaginaCarregar();
 
                 var dtIni = dataInicio.ConvertaParaDataPtBr();
                 var dtFim = dataFim.ConvertaParaDataPtBr();
 
-                relatorioDePonto = ObtenhaRelatorioDePonto(dtIni, dtFim, exibirProgresso);
-                File.WriteAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "arqs.json"), JsonConvert.SerializeObject(relatorioDePonto));
+                return ObtenhaRelatorioDePonto(dtIni, dtFim, exibirProgresso);
             }
             catch (Exception e)
             {
                 if (exibirProgresso)
+                {
                     GerenciadorDeProgresso.ExibaErro("Aconteceu um erro! Reiniciando...");
+                }
+
                 Thread.Sleep(2000);
                 SalveDataParaRetry(dataInicio, dataFim);
 
@@ -143,7 +131,7 @@ namespace GSAutoTimeEntries.Servicos
                 Environment.Exit(0);
             }
 
-            return relatorioDePonto;
+            return null;
         }
 
         public class AtividadeLancada
@@ -383,13 +371,15 @@ namespace GSAutoTimeEntries.Servicos
             foreach (var lancamento in listaDeLancamentos)
             {
                 if (exibirProgresso)
+                {
                     GerenciadorDeProgresso.AtualizeProgressBar(
                         GerenciadorDeProgresso.Progresso + progressPorLancamento,
                         $"Realizando lançamento {i}/{listaDeLancamentos.Count}");
+                }
+
                 i++;
 
                 Driver.Navigate().GoToUrl(lancamento.LinkAtividade + "/time_entries/new");
-
                 Driver.EsperePaginaCarregar();
 
                 // Data
@@ -422,9 +412,6 @@ namespace GSAutoTimeEntries.Servicos
 
         public void RealizeLancamento(string paginaDaTarefa, IList<Lancamento> listaDeLancamentos, bool exibirProgresso = true, bool jaLogado = false)
         {
-            Driver.Quit();
-            _chromeDriver = null;
-
             if (!jaLogado)
             {
                 RealizeLoginRedmine(Configuracao.ConfiguracaoRedmine);
@@ -448,7 +435,7 @@ namespace GSAutoTimeEntries.Servicos
                         $"Realizando lançamento {i}/{listaDeLancamentos.Count}");
                 i++;
 
-                Driver.Navigate().GoToUrl(paginaDaTarefa + "/time_entries/new");
+                Driver.Navigate().GoToUrl(lancamento.LinkAtividade + "/time_entries/new");
 
                 Driver.EsperePaginaCarregar();
 
@@ -483,31 +470,37 @@ namespace GSAutoTimeEntries.Servicos
             //Driver.Quit();
         }
 
-        private string[] ObtenhaRelatorioDePonto(string dataInicio, string dataFim, bool exibirProgresso = true)
+        private const string LinkPrdAa1Lg = @"https://prd-aa1.lg.com.br/lg/";
+
+        private const string LinkAutoAtendimento = LinkPrdAa1Lg + @"Produtos/AA/AAExibicaoDadosDoColaborador/Inicio";
+
+        private const string LinkEmissaoDeCartaoDePontoLayout1 = LinkPrdAa1Lg + @"Produtos/Infraestrutura/IntegracaoPonto?urlFuncionalidade=/Login/Index/RelatorioCartaodePontoLayout1";
+
+
+        private const string RelatorioIdComboFiltroColaboradores = "comboGridFiltroColaboradoresIndividualAux";
+
+        private string ObtenhaRelatorioDePonto(string dataInicio, string dataFim, bool exibirProgresso = true)
         {
             Driver.EsperePaginaCarregar();
 
-            Driver.Navigate().GoToUrl("https://prd-aa1.lg.com.br/lg/Produtos/AA/AAExibicaoDadosDoColaborador/Inicio");
+            Driver.Navigate().GoToUrl(LinkAutoAtendimento);
 
             Driver.EsperePaginaCarregar();
 
             var matricula = Driver.FindElementsByTagName("li")[3].Text;
 
-            var caminhoArquivo = AppDomain.CurrentDomain.BaseDirectory + "RelatorioCartaoDePontoLayout1.csv";
-
-            // Deleta o arquivo se ele já existir, pra evitar erros
-            if (File.Exists(caminhoArquivo)) File.Delete(caminhoArquivo);
-
             if (exibirProgresso)
+            {
                 GerenciadorDeProgresso.AtualizeProgressBar(50, "Acessando emissão de relatório");
+            }
 
             // Em vez de ficar batendo cabeça, descobrindo como que eu ia entrar naquele maldito iFrame sem title
             // peguei logo a src dele e navegamos pra ele, já que é somente isso que estou fazendo aqui, e nem vou querer voltar na outra página
-            Driver.Navigate().GoToUrl("https://prd-aa1.lg.com.br/lg/Produtos/Infraestrutura/IntegracaoPonto?urlFuncionalidade=/Login/Index/RelatorioCartaodePontoLayout1");
+            Driver.Navigate().GoToUrl(LinkEmissaoDeCartaoDePontoLayout1);
             Driver.EsperePaginaCarregar();
             Driver.EspereTempoEspecifico(5);
 
-            var byComboPesquisa = By.Id("comboGridFiltroColaboradoresIndividualAux");
+            var byComboPesquisa = By.Id(RelatorioIdComboFiltroColaboradores);
 
             Driver.EspereElementoSerExibidoESerClicavel(byComboPesquisa);
 
@@ -532,11 +525,15 @@ namespace GSAutoTimeEntries.Servicos
 
             Driver.EspereTempoEspecifico(2);
 
+            Driver.EsperePaginaCarregar();
+
             Driver.EspereElementoSerExibidoESerClicavel(byDataInicio);
             Driver.EspereElementoSerExibidoESerClicavel(byDataFim);
 
             if (exibirProgresso)
+            {
                 GerenciadorDeProgresso.AtualizeProgressBar(50, "Preenchendo campos");
+            }
 
             Driver.EspereTempoEspecifico(3);
 
@@ -554,12 +551,27 @@ namespace GSAutoTimeEntries.Servicos
             Driver.EspereTempoEspecifico(5);
 
             Driver.FindElementById("btnEmitirTopo").Click();
+            Driver.EsperePaginaCarregar();
+            Driver.EspereTempoEspecifico(2);
 
+            Driver.EspereElementoSerExibidoESerClicavel(By.Id("resultListaTarefas"));
+
+            //Ficar estuprando o botao de recarregar de 2 em 2 segundos
+
+            //var elId = Driver.FindElement(By.CssSelector("#GridListaTarefas>div.t-grid-content.classeOverflowGrid>table>tbody>tr>td:nth-child(1)"));
+            //var taskId = elId.GetAttribute("title");
+
+            //Driver.EspereTempoEspecifico(2);
+
+            //Driver.Navigate().GoToUrl($@"https://prd-pt1.lg.com.br/Ponto/VisualizarRelatorio/Inicio?id={taskId}&idServico=CartaoDePontoLayout1");
+            
             //Driver.ExecuteScript($"document.getElementById('DataInicioPeriodoFechamento').value='{dataInicio}'");
             //Driver.ExecuteScript($"document.getElementById('DataInicioPeriodoFechamento').value='{dataFim}'");
 
             if (exibirProgresso)
+            {
                 GerenciadorDeProgresso.AtualizeProgressBar(60, "Aguardando emissão");
+            }
 
             var contagemDeJanelas = Driver.WindowHandles.Count;
             Driver.EspereCondicao(x => x.WindowHandles.Count == contagemDeJanelas + 1, 60);
@@ -568,53 +580,59 @@ namespace GSAutoTimeEntries.Servicos
             string subWindowHandler = null;
 
             var handles = Driver.WindowHandles;
-            var enumerator = handles.GetEnumerator();
-            while (enumerator.MoveNext())
+            using (var enumerator = handles.GetEnumerator())
             {
-                subWindowHandler = enumerator.Current;
+                while (enumerator.MoveNext())
+                {
+                    subWindowHandler = enumerator.Current;
+                }
+
+                Driver.SwitchTo().Window(subWindowHandler);
+            }
+            
+            Driver.EsperePaginaCarregar();
+
+            var allXlsxFiles = Directory.GetFiles(DownloadPath, "*.xlsx").ToList();
+            allXlsxFiles.ForEach(fileName =>
+            {
+                if (fileName.Contains("Relatorio_CartaoDePontoLayout"))
+                {
+                    File.Delete(Path.Combine(DownloadPath, fileName));
+                }
+            });
+
+            if (Configuracao.OcultarNavegador)
+            {
+                Driver.EnableHeadlessDownload(DownloadPath);
             }
 
-            Driver.SwitchTo().Window(subWindowHandler);
-
-            Driver.EsperePaginaCarregar();
-            Driver.EspereTempoEspecifico(1);
-
-            var elBtnDownload = Driver.FindElementsByClassName("k-link")
-                                      .LastOrDefault(x => x.GetAttribute("title") == "Export" &&
-                                                          x.GetAttribute("data-command") == "telerik_ReportViewer_export");
-
-            Driver.EsperePaginaCarregar();
-            Driver.EspereTempoEspecifico(2);
-
-            // Guardando esse código pra posterioridade
-            //Driver.ExecuteScript("arguments[0].style='display: block;'", element);
-
-
-            var acao = new Actions(Driver);
-            acao.MoveToElement(elBtnDownload)
-                .Build()
-                .Perform();
-
-            acao.Click(elBtnDownload);
-
-            Driver.EsperePaginaCarregar();
-            Driver.EspereTempoEspecifico(2);
-
-            if (Configuracao.OcultarNavegador) Driver.HabiliteDownloadDeArquivosHeadlessNaPaginaAtual();
-
-            var options = Driver.FindElementsByClassName("k-link");
-            var item = options.FirstOrDefault(x => x.GetAttribute("textContent").Contains("CSV"));
-            item.Click();
-
-            Driver.EspereTempoEspecifico(3);
+            var id = Driver.Url.Between(@"VisualizarRelatorio/Inicio?id=", @"&idServico");
+            Driver.Navigate().GoToUrl(@"https://prd-pt1.lg.com.br/Ponto/EmissaoRelatorio/DownloadXls?id=" + id);
 
             if (exibirProgresso)
-                GerenciadorDeProgresso.AtualizeProgressBar(70, "Lendo relatório");
-            if (File.Exists(caminhoArquivo))
             {
-                var arquivo = File.ReadAllLines(caminhoArquivo);
+                GerenciadorDeProgresso.AtualizeProgressBar(70, "Lendo relatório");
+            }
+            
+            var timeout = new Stopwatch();
+            timeout.Start();
 
-                return arquivo;
+            while (true)
+            {
+                if (timeout.Elapsed > TimeSpan.FromSeconds(30))
+                {
+                    break;
+                }
+
+                foreach (var fileName in Directory.GetFiles(DownloadPath, "*.xlsx").ToList())
+                {
+                    if (fileName.Contains("Relatorio_CartaoDePontoLayout"))
+                    {
+                        return fileName;
+                    }
+                }
+
+                Thread.Sleep(TimeSpan.FromMilliseconds(500));
             }
 
             return null;
@@ -673,7 +691,7 @@ namespace GSAutoTimeEntries.Servicos
         {
             _configuracao = null;
 
-            if (Driver != null) Driver.Dispose();
+            Driver?.Dispose();
         }
 
         public bool TenteAcessarLink(string linkAtividade)

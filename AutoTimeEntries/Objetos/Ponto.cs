@@ -5,8 +5,10 @@ namespace GSAutoTimeEntriesWebApi.Objetos
 {
     public class Ponto
     {
+        public string DiaDaSemana { get; set; }
+
         public string Data { get; set; }
 
-        public List<TimeSpan> HorariosDasBatidas { get; set; }
+        public List<TimeSpan> Marcacoes { get; set; }
     }
 }

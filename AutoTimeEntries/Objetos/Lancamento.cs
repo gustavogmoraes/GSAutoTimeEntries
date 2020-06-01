@@ -42,6 +42,8 @@ namespace GSAutoTimeEntriesWebApi.Objetos
 
         public bool NaoCalcular { get; set; }
 
+        public string DiaDaSemana { get; set; }
+
         public void CalculeHoras()
         {
             if (NaoCalcular) return;

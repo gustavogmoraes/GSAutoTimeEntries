@@ -1,6 +1,0 @@
-D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\Startup\bin\Release\Startup.exe.config
-D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\Startup\bin\Release\Startup.exe
-D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\Startup\bin\Release\Startup.pdb
-D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\Startup\obj\Release\Startup.csproj.CoreCompileInputs.cache
-D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\Startup\obj\Release\Startup.exe
-D:\Backup Maquina Gustavo\Visual Studio 2010\Projects\LancamentoHoras - TestWebApi\GSAutoTimeEntries\Startup\obj\Release\Startup.pdb

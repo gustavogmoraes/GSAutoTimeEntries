@@ -3,16 +3,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using IWshRuntimeLibrary;
+using File = System.IO.File;
 
 namespace GSAutoTimeEntriesWebApi.Objetos
 {
     public class Validador
     {
-        public bool ValideSeArquivoEhRegistroDePonto(string[] linhas, bool exibirProgresso = true)
+        public bool ValideSeArquivoEhRegistroDePonto(string caminhoArquivoDePonto, bool exibirProgresso = true)
         {
             if(exibirProgresso)
                 GerenciadorDeProgresso.AtualizeProgressBar(75, "Validando relatório");
 
+            var linhas = File.ReadAllLines(caminhoArquivoDePonto);
             if (linhas[0].Contains("dataTextBox") && linhas[0].Contains("marcacoesTextBox"))
             {
                 return true;
@@ -24,16 +27,16 @@ namespace GSAutoTimeEntriesWebApi.Objetos
 
         public bool ValideSeLinkDeTarefaEhValido(string link)
         {
-            link = link.Trim();
-            if (link.StartsWith("http") &&
-                link.Contains("redmine") &&
-                link.Contains("issues") &&
-                char.IsDigit(link.Last()))
+            if (string.IsNullOrEmpty(link))
             {
-                return true;
+                return false;
             }
 
-            return false;
+            link = link.Trim();
+            return link.StartsWith("http") &&
+                   link.Contains("redmine") &&
+                   link.Contains("issues") &&
+                   char.IsDigit(link.Last());
         }
 
         public void Dispose()
@@ -68,7 +71,7 @@ namespace GSAutoTimeEntriesWebApi.Objetos
 
         private bool Valide(Lancamento lancamento)
         {
-            if (lancamento.Horas < 0 || lancamento.Comentario == null || string.IsNullOrEmpty(lancamento.LinkAtividade))
+            if (lancamento.Horas < 0 || lancamento.Comentario == null || !ValideSeLinkDeTarefaEhValido(lancamento.LinkAtividade))
             {
                 return false;
             }
